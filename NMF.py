@@ -15,13 +15,26 @@ parser.add_argument('--max', required=True, help='enter maximum_signatures')
 args = parser.parse_args()
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 def main():    
     # to get input from table format (mutation catalog matrix)
     path_to_example_table = sig.importdata("matrix")
     data = path_to_example_table # you can put the path to your tab delimited file containing the mutational catalog matrix/table
     sig.sigProfilerExtractor("matrix", "./ext_data",
-                         "./input_data/output/SBS/DATA.SBS96.all", reference_genome=args.ref_genome,
-                             minimum_signatures=args.min, maximum_signatures=args.max, nmf_replicates=100, cpu=-1)
+                         "./input_data/output/SBS/DATA.SBS96.all", reference_genome=str(args.ref_genome),
+                             minimum_signatures=int(args.min), maximum_signatures=int(args.max), nmf_replicates=100, cpu=-1)
     
 #sig_extract()
 if __name__ == '__main__':

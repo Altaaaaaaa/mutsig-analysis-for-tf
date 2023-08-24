@@ -16,6 +16,20 @@ parser.add_argument('--ref_genome', required=True, help='select reference genome
 args = parser.parse_args()
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Mutation Count
 def changeValue(before, after):
     if (before == 'G' and after == 'C') or (before == 'A' and after == 'T'):
@@ -30,8 +44,8 @@ def changeValue(before, after):
         return 'T', 'G'
     return before, after
 
-genes = './data/gene_'+args.ref_genome+'.txt'
-seqs = list(SeqIO.parse('./data/'+args.ref_genome+'.fa', 'fasta'))
+genes = './data/gene_'+str(args.ref_genome)+'.txt'
+seqs = list(SeqIO.parse('./data/'+str(args.ref_genome)+'.fa', 'fasta'))
 for i in seqs:
     i.id = i.id.replace('chr', '')
 chrs = [s.id for s in seqs]
@@ -109,6 +123,23 @@ def calculate(i): # vcf 파일 반복
 
     ##### 지정
     df.to_csv('./Gene_count/' + fname[:-4] + '_cnt.csv', sep=',', index=True, header=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     pool = Pool(processes = 10)

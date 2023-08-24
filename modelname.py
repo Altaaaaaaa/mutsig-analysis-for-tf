@@ -3,12 +3,6 @@ import argparse
 import pandas as pd
 import numpy as np
 import scipy.stats as stat
-from numpy import dot
-from numpy.linalg import norm
-from sklearn.metrics.pairwise import cosine_similarity
-import matplotlib.pyplot as plt
-import seaborn as sns
-from pdf2image import convert_from_path
 
 # 인자값을 받을 수 있는 인스턴스 생성
 parser = argparse.ArgumentParser(description='mutational signature analysis program')
@@ -20,6 +14,17 @@ parser.add_argument('--tf_file', required=True, help='tf_database_file')
 # 입력받은 인자값을 args에 저장 (type: namespace)
 args = parser.parse_args()
 
+
+
+
+
+
+
+
+
+
+
+
 # Gene count 불러오기
 yMatList = []
 
@@ -30,6 +35,18 @@ for fName in os.listdir("./Gene_count"):
 
 ext_P = pd.read_csv("./ext_data/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Signatures/SBS96_De-Novo_Signatures.txt", sep='\t', index_col=0) #Extractor 결과 중 process 사용
 ext_E = pd.read_csv("./ext_data/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Activities/SBS96_De-Novo_Activities_refit.txt", sep='\t', index_col=0) #Extractor 결과 중 exposure 사용
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Contribution 계산
 
@@ -74,14 +91,36 @@ cList, contri_name = cal_contri('./output/', ext_P, ext_E)
 contri_dict = dict(zip(contri_name,cList))
 contri_dict = dict(sorted(contri_dict.items()))
 
+
+
+
+
+
+
+
+
+
+
 # TF 추출 -> 저장
 
-db_TF = pd.read_csv(args.tf_file, sep=',', index_col=0) # TF 데이터
+db_TF = pd.read_csv(str(args.tf_file), sep=',', index_col=0) # TF 데이터
 
 db_TF_list = list(set(db_TF['name']))
 
 with open('./output/tf/tf_name_list.txt', 'a') as file:
     file.write('\n'.join(db_TF_list))
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Gene count 불러오기
 
@@ -99,6 +138,20 @@ count_dict = dict(sorted(count_dict.items()))
 
 smp_name = list(count_dict.keys())
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Gene id가 TF인 것만 추출하여 저장
 
 count_TF = []
@@ -112,9 +165,23 @@ for i in range(len(smp_name)):
 count_TF_dict = dict(zip(smp_name,count_TF))
 count_TF_dict = dict(sorted(count_TF_dict.items()))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # gsva 결과 파일 가져오기
 
-gsva_d = pd.read_csv(args.gsva_folder, sep='\t', index_col=0) # gsva score
+gsva_d = pd.read_csv(str(args.gsva_folder), sep='\t', index_col=0) # gsva score
 
 gsva_data = []
 gsva_gene = []
@@ -132,11 +199,42 @@ for i in range(len(gsva_d)):
 gsva_data.append(df0)
 gsva_data.append(df1)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # count 파일의 gene id와 일치하는 것만 남김
 gsva_TF = list(count_TF[0].columns)
 
 for i in range(len(gsva_data)):
     gsva_data[i] = gsva_data[i][gsva_data[i].index.isin(gsva_TF)]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # correlation 분석
@@ -146,6 +244,8 @@ column = ['gene', 'sig', 'c', 'p']
 index = 0
 sig = contri_dict[smp_name[0]].columns
 types = count_TF_dict[smp_name[0]].index
+
+pn = ['neg','pos']
 
 for gs in range(len(gsva_data)):
     df = pd.DataFrame(columns=column)
@@ -179,4 +279,46 @@ for gs in range(len(gsva_data)):
             df.loc[index, 'p'] = p_value
             index += 1
 
-    df.to_csv('./output/Cor/Result_'+str(gs)+'.csv')  # correlation 분석 결과
+    df.to_csv('./output/Cor/Result_'+pn[gs]+'.csv')  # correlation 분석 결과
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Filtering
+    df = df.dropna()
+
+    PartRe_list = []
+    sig_df = pd.DataFrame(columns=df.columns)
+    cnt = 0
+    for s in range(9):  # 시그니쳐 개수에 따라 range 변경
+        cal_df = pd.DataFrame(columns=df.columns)  # columns=columns
+        idx = 0
+        for i in range(len(df)):  # 총 행만큼 반복하기
+            if df.iloc[i, 2] == '' or df.iloc[i, 3] == '': continue
+            # Num = int(df.iloc[i,0])
+            Sig = int(df.iloc[i, 1])
+            Cor = float(df.iloc[i, 2])
+            P_val = float(df.iloc[i, 3])
+            if Sig == s and Cor >= 0.35 and P_val <= 0.05: # Cor <= -0.9 and
+                print(Sig, Cor, P_val) # 확인을 위해서 출력
+                cal_df.loc[idx, :] = df.iloc[i, :]
+                sig_df.loc[cnt, :] = df.iloc[i, :]
+                idx += 1
+                cnt += 1
+        cal_df.drop(cal_df.columns[1], axis=1)   
+
+        PartRe_list.append(cal_df)
+    sig_df.drop(cal_df.columns[1], axis=1)
+    sig_df.to_csv('./output/Cor/Filt_Result_'+pn[gs]+'.csv', sep=',', index=True, header=True) 
+
