@@ -27,10 +27,10 @@ cd modelname
 ## How to execute code
 
 - [Step1) Matrix Generator](#Step1-Matrix-Generator)   
-- [Step2) NMF](#Step2)   
-- [Step3) Gene_count](#Step3)   
-- [Step4) gsva](#Step4)   
-- [Step5) model_name](#Step5)
+- [Step2) NMF](#Step2-NMF)   
+- [Step3) Gene_count](#Step3-Gene_count)   
+- [Step4) gsva](#Step4-gsva)   
+- [Step5) model_name](#Step5-model_name)
 - [Optional step](#Optional-Code)   
    
 
@@ -49,8 +49,7 @@ $ python MatGen.py --ref_genome=[reference genome]
 ```
 
 ---
-### Step2
-**Step2) NMF**
+### Step2. NMF
 
 * input: count matrix(M)
 * variable:
@@ -67,7 +66,7 @@ $ python NMF.py --ref_genome=[reference genome] --min=[minimum] --max=[maximum]
 
 ---
 
-**Step3) Gene_count**
+### Step3. Gene_count
 
 * input: vcf file, fasta, gtf file
 * variable:
@@ -88,7 +87,7 @@ $ python Gene_count.py --ref_genome=[reference genome]
 
 ---
 
-**Step4) gsva**
+### Step4. gsva
 
 * input: gene expression data
 * variable:
@@ -101,7 +100,7 @@ $ python gsva.py --ref_genome=[reference genome]
 
 ---
 
-**Step5) model_name**
+### Step5. model_name
 
 * 우리의 메인 분석 모델
 * input: Gene count Matrix, GSVA score, TF-TG  data
