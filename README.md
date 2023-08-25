@@ -6,11 +6,6 @@ This framework can discover candidate transcription factors(TFs) that regulate t
 나중에 여기에 논문 링크 넣기
 -->
 
-<details><summary>Our Workflow(click!)
-</summary>
-![Workflow of Our Model](./readme_img/workflow.png)   
-</details>
-
 
 ## Input Data
 
@@ -31,7 +26,7 @@ cd modelname
 
 ## How to execute code
 
-- [Step1) Matrix Generator](#Step1)   
+- [Step1) Matrix Generator](#Step1.-Matrix-Generator)   
 - [Step2) NMF](#Step2)   
 - [Step3) Gene_count](#Step3)   
 - [Step4) gsva](#Step4)   
@@ -41,8 +36,7 @@ cd modelname
 
 In the command line, please run the following:
 
-### Step1
-) Matrix Generator
+### Step1. Matrix Generator
 
 * input: vcf file
 * variable:
