@@ -26,7 +26,7 @@ cd modelname
 
 ## How to execute code
 
-- [Step1) Matrix Generator](#Step1.-Matrix-Generator)   
+- [Step1) Matrix Generator](#Step1-Matrix-Generator)   
 - [Step2) NMF](#Step2)   
 - [Step3) Gene_count](#Step3)   
 - [Step4) gsva](#Step4)   
