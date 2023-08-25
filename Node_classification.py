@@ -283,7 +283,7 @@ nx.draw_networkx_labels(classi_G, pos, labels=node_labels, font_size=15, font_co
 
 
 
-plt.savefig('./output/Node_classi/node_figure'+str(args.pos_neg)+'png')
+plt.savefig('./output/Node_classi/node_figure_'+str(args.pos_neg)+'png')
 
 plt.rcParams['figure.figsize'] = [20, 10]
 plt.legend(loc='upper right', fontsize=15)

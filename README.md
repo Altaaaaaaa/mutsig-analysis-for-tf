@@ -131,7 +131,9 @@ $ python gsva.py --gsva_folder=[gsva_result_folder] --tf_file=[tf_database_file]
   * [pos or neg] => node classification을 진행하려는 그룹을 입력(pos or neg)
   * [tg divided into two groups] => gene expression을 기준으로 correlation 분석 결과, positive와 negative로 나뉜 tf-tg data
   * [the number of signatures] => 분석에 사용한 최적의 시그니처 개수
-* 추후 정리 예정
+* Step5에서 나온 결과 파일을 바탕으로 multi-signature gene에 대해서 node classfication
+* 최종 파일은 './output/Node_classi/'에 저장
+* 시각화한 그래프 figure 파일은 './output/Node_classi/node_figure_XXX.png'로 저장됨
 
 ```bash
 $ python Node_classification.py --pos_neg=[pos or neg] --tf_group_file=[tg divided into two groups] --sig_num=[the number of signatures]
