@@ -8,7 +8,7 @@ This framework can discover candidate transcription factors(TFs) that regulate t
 
 <details><summary>Our Workflow(click!)
 </summary>
-![title](./readme_img/workflow.png)   
+![Workflow of Our Model](./readme_img/workflow.png)   
 </details>
 
 
@@ -154,7 +154,7 @@ $ python Node_classification.py --pos_neg=[pos or neg] --tf_group_file=[tg divid
   * [version] => 비교하고자 하는 cosmic signature의 version을 입력
 * NMF.py를 통해 De novo 추출된 최적의 시그니쳐가 이미 연구된 cosmic signature와 얼마나 유사한지를 히트맵을 통해 보여줌
 * 예시는 다음과 같음
-(./readme_img/cosine.png)
+![Workflow of Our Model](./readme_img/cosine.png) 
 
 ```bash
 $ python Denovo_cosine.py --ref_genome=[reference genome] --version=[version]
