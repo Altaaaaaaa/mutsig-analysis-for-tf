@@ -9,8 +9,7 @@ parser = argparse.ArgumentParser(description='de novo-cosmic cosine similarity')
 
 # 입력받을 인자값 등록
 parser.add_argument('--pos_neg', required=True, help='select pos/neg group(pos or neg)')
-parser.add_argument('--version', required=True, help='select cosmic signature version(e.g. 3.3)')
-parser.add_argument('--tf_file', required=True, help='tf_database_file')
+parser.add_argument('--tf_group_file', required=True, help='tf-tg data divided into two groups')
 parser.add_argument('--sig_num', required=True, help='enter the number of signature')
 
 
@@ -208,7 +207,7 @@ node_gene_sig, mul = node_iter(4,node_gene_sig,mul_gene)
 
 
 df_index = gene_sig_df.index
-df_columns = ['SBS10a', 'SBS10b', 'SBS26', 'SBS6', 'SBS17b', 'SBS93', 'SBS18', 'SBS1', 'SBS94']
+df_columns = ['sig.'+str(i) for i in range(int(args.sig_num))]
 
 gene_sig_df2 = pd.DataFrame(data=node_gene_sig, index=df_index, columns=df_columns, dtype=None, copy=False)
 
