@@ -147,7 +147,7 @@ $ python Node_classification.py --pos_neg=[pos or neg] --tf_group_file=[tg divid
 * input: matrix P
 * variable:
   * [reference genome] => Enter the reference genome you want to analyze(e.g. GRCh37).
-  * [version] => Enter the version of cosmic signature you want to compare
+  * [version] => Enter the version of cosmic signature you want to compare(e.g. 3.3.1)
 * A heat map shows how the optimal signature extracted by De novo Signatures from **NMF.py** is similar to the cosmic signature.
 * We referred from https://cancer.sanger.ac.uk/signatures/downloads/.
 * Examples are as follows:
