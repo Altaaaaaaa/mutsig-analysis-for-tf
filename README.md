@@ -9,13 +9,12 @@ This framework can discover candidate transcription factors(TFs) that regulate t
 
 ## Input Data
 
-인풋 데이터는 어떤 형식으로? -> vcf 형태
+Input data should be put in **vcf files** representing **mutation counts**.
 
 
-다 준비가 되었다면 분석이 필요한 mutation 데이터를 './input_data' 디렉토리에 넣기
+If everything is ready, please put the mutation data that needs analysis in directory named './input_data'
 
-
->우리가 제공하는 샘플 데이터는 './sample' 폴더에 있음
+>The sample data is in directory named './sample'
 
 ## Installation
 Clone repository.
@@ -40,9 +39,9 @@ In the command line, please run the following:
 
 * input: vcf file
 * variable:
-  * [reference genome] => 분석하려는 데이터의 reference genome을 입력하기(e.g. GRCh37)
-* SigprofilerMatrixGenerator를 이용하여 input 파일을 count matrix(M) 형태로 변환해줌
-* https://cancer.sanger.ac.uk/signatures/tools/ 에서 참고 가능
+  * [reference genome] => Enter the reference genome you want to analyze(e.g. GRCh37).
+* Use **SigprofilerMatrixGenerator** to convert input files into count matrix(M).
+* We referred from https://cancer.sanger.ac.uk/signatures/tools/.
 
 ```bash
 $ python MatGen.py --ref_genome=[reference genome]
@@ -53,12 +52,14 @@ $ python MatGen.py --ref_genome=[reference genome]
 
 * input: count matrix(M)
 * variable:
-  * [reference genome] => 분석하려는 데이터의 reference genome을 입력하기(e.g. GRCh37)
-  * [minimum] => 추출할 최소 시그니쳐 개수
-  * [maximum] => 추출할 최대 시그니쳐 개수
-* MatGen.py를 통해 만들어진 파일을 input data로 사용함
-* 우리는 SBS96.all(Single Base Substitution의 96가지 mutation type)을 사용함
-* 실행 후 결과 중 최적의ㅡ 시그니쳐를 선택하여 분석에 사용할 예정(최적의 시그니처는 './ext_data/SBS/SBS96_selection_plot.pdf'를 참고함)
+  * [reference genome] => Enter the reference genome you want to analyze(e.g. GRCh37).
+  * [minimum] => Minimum number of signatures to extract
+  * [maximum] => Maximum number of signatures to extract
+* The results made through **MatGen.py** were used as input data.
+* We use SBS96.all(96 types of mutations in Single Base Substation).
+* After execution, the optimal number of signature will be selected and used for analysis(Refer to './ext_data/SBS/SBS96_selection_plot.pdf' for the best number of signature).
+
+
 
 ```bash
 $ python NMF.py --ref_genome=[reference genome] --min=[minimum] --max=[maximum]
@@ -70,10 +71,10 @@ $ python NMF.py --ref_genome=[reference genome] --min=[minimum] --max=[maximum]
 
 * input: vcf file, fasta, gtf file
 * variable:
-  * [reference genome] => 분석하려는 데이터의 reference genome을 입력하기(e.g. GRCh37)
-* 우리는 기여도 계산을 하기 전, 특정 유전자 부분에서 발생한 gene count가 필요함
-* reference genome의 annotation 파일을 활용하여 gene 별 count를 구하는 code
-* 결과는 아래 table과 같은 형식으로 나옴
+  * [reference genome] => Enter the reference genome you want to analyze(e.g. GRCh37).
+* Before we calculate the contribution of signatures, we need **gene-specific counts** from a particular gene region.
+* It is a code that calculates gene-specific counts using the annotation file of reference genome.
+* The results are as shown in the table below
 
 |  | Gene 1 | Gene 2 | ... |
 | --- | --- | --- | --- |
@@ -91,8 +92,8 @@ $ python Gene_count.py --ref_genome=[reference genome]
 
 * input: gene expression data
 * variable:
-  * [reference genome] => 분석하려는 데이터의 reference genome을 입력하기(e.g. GRCh37)
-* 추후 정리 예정
+  * [reference genome] => Enter the reference genome you want to analyze(e.g. GRCh37).
+* To be added later
 
 ```bash
 $ python gsva.py --ref_genome=[reference genome]
@@ -102,15 +103,15 @@ $ python gsva.py --ref_genome=[reference genome]
 
 ### Step5. model_name
 
-* 우리의 메인 분석 모델
+* Our main analysis model
 * input: Gene count Matrix, GSVA score, TF-TG  data
 * variable:
-  * [gsva_result_folder] => gsva.py를 통해 나온 결과 파일이 있는 폴더를 입력
-  * [tf_database_file] => 분석하고자 하는 TF-TG database 파일을 입력
-* signature의 contribution(샘플 별)을 계산함
-* sig-gene-mutation count와 GSVA score 사이의 correlation을 분석
-* 최종 파일은 './output/Cor/'에 저장됨
-* 결과 파일의 형태는 아래의 table과 같음
+  * [gsva_result_folder] => Enter the directory where the results file from **gsva.py** is located.
+  * [tf_database_file] => Enter the TF-TG database file you want to analyze
+* Calculate the signature's contribution (by sample).
+* The correlation between gene-specific counts by signature and the GSVA score was analyzed.
+* The result file is saved in the directory named './output/Cor/'.
+* The results are as shown in the table below.
 
 | No. | Gene | sig | r | p |
 | --- | --- | --- | --- | --- |
@@ -128,12 +129,12 @@ $ python gsva.py --gsva_folder=[gsva_result_folder] --tf_file=[tf_database_file]
 
 * input: gene expression data
 * variable:
-  * [pos or neg] => node classification을 진행하려는 그룹을 입력(pos or neg)
-  * [tg divided into two groups] => gene expression을 기준으로 correlation 분석 결과, positive와 negative로 나뉜 tf-tg data
-  * [the number of signatures] => 분석에 사용한 최적의 시그니처 개수
-* Step5에서 나온 결과 파일을 바탕으로 multi-signature gene에 대해서 node classfication
-* 최종 파일은 './output/Node_classi/'에 저장
-* 시각화한 그래프 figure 파일은 './output/Node_classi/node_figure_XXX.png'로 저장됨
+  * [pos or neg] => Enter the group for which you want to proceed node classification(pos or neg)
+  * [tg divided into two groups] => As a result of correlation analysis based on gene expression, it means tf-tg data divided into positive and negative.
+  * [the number of signatures] => The optimal number of signatures used for analysis
+* You can proceed with node classification for multi-signature gene based on the result file from **Step 5**.
+* The result file is saved in the directory named './output/Node_classi/'.
+* The visualized graph figure is saved as './output/Node_classi/node_figure_XXX.png'
 
 ```bash
 $ python Node_classification.py --pos_neg=[pos or neg] --tf_group_file=[tg divided into two groups] --sig_num=[the number of signatures]
@@ -145,10 +146,11 @@ $ python Node_classification.py --pos_neg=[pos or neg] --tf_group_file=[tg divid
 
 * input: matrix P
 * variable:
-  * [reference genome] => 분석하려는 데이터의 reference genome을 입력하기(e.g. GRCh37)
-  * [version] => 비교하고자 하는 cosmic signature의 version을 입력
-* NMF.py를 통해 De novo 추출된 최적의 시그니쳐가 이미 연구된 cosmic signature와 얼마나 유사한지를 히트맵을 통해 보여줌
-* 예시는 다음과 같음
+  * [reference genome] => Enter the reference genome you want to analyze(e.g. GRCh37).
+  * [version] => Enter the version of cosmic signature you want to compare
+* A heat map shows how the optimal signature extracted by De novo Signatures from **NMF.py** is similar to the cosmic signature.
+* We referred from https://cancer.sanger.ac.uk/signatures/downloads/.
+* Examples are as follows:
 ![Workflow of Our Model](./readme_img/cosine.png) 
 
 ```bash
