@@ -88,15 +88,13 @@ $ python Gene_count.py --ref_genome=[reference genome]
 
 ---
 
-### Step4. gsva
+### Step4. GSVA
 
-* input: gene expression data
-* variable:
-  * [reference genome] => Enter the reference genome you want to analyze(e.g. GRCh37).
-* To be added later
+* input: Original TF-TG geneset data, Expression file
+* output : separated TF-TG geneset data, GSVA output file
 
 ```bash
-$ python gsva.py --ref_genome=[reference genome]
+$ python GSVA.py -g [Original TF-TG geneset data] -e [Expression file] -o1 [Separated TF-TG geneset data] -o2 [GSVA output file]
 ```
 
 ---
