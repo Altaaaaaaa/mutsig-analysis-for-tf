@@ -116,7 +116,7 @@ $ python GSVA.py -g [Original TF-TG geneset data] -e [Expression file] -o1 [Sepa
 | 0 | Gene id | signature id | correlation coefficient | p-value |
 
 ```bash
-$ python gsva.py --gsva_folder=[gsva_result_folder] --tf_file=[tf_database_file]
+$ python modelname.py --gsva_folder=[gsva_result_folder] --tf_file=[tf_database_file]
 ```
 
 ---
