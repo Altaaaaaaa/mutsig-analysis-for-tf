@@ -29,7 +29,7 @@ cd modelname
 - [Step2) NMF](#Step2-NMF)   
 - [Step3) Gene_count](#Step3-Gene_count)   
 - [Step4) gsva](#Step4-gsva)   
-- [Step5) model_name](#Step5-model_name)
+- [Step5) MutTF](#Step5-MutTF)
 - [Optional step](#Optional-Code)   
    
 
@@ -99,9 +99,9 @@ $ python GSVA.py -g [Original TF-TG geneset data] -e [Expression file] -o1 [Sepa
 
 ---
 
-### Step5. model_name
+### Step5. MutTF
 
-* Our main analysis model
+* Our main analysis model, **'MutTF'**
 * input: Gene count Matrix, GSVA score, TF-TG  data
 * variable:
   * [gsva_result_folder] => Enter the directory where the results file from **gsva.py** is located.
