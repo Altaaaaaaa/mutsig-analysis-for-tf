@@ -19,8 +19,8 @@ If everything is ready, please put the mutation data that needs analysis in dire
 ## Installation
 Clone repository.
 ```
-git clone https://github.com/BML-cbnu/modelname
-cd modelname
+git clone https://github.com/BML-cbnu/MutTF
+cd MutTF
 ```
 
 ## How to execute code
@@ -116,7 +116,7 @@ $ python GSVA.py -g [Original TF-TG geneset data] -e [Expression file] -o1 [Sepa
 | 0 | Gene id | signature id | correlation coefficient | p-value |
 
 ```bash
-$ python modelname.py --gsva_folder=[gsva_result_folder] --tf_file=[tf_database_file]
+$ python MutTF.py --gsva_folder=[gsva_result_folder] --tf_file=[tf_database_file]
 ```
 
 ---
@@ -149,7 +149,7 @@ $ python Node_classification.py --pos_neg=[pos or neg] --tf_group_file=[tg divid
 * A heat map shows how the optimal signature extracted by De novo Signatures from **NMF.py** is similar to the cosmic signature.
 * We referred from https://cancer.sanger.ac.uk/signatures/downloads/.
 * Examples are as follows:
-![Workflow of Our Model](./readme_img/cosine.png) 
+![Workflow of 'MutTF'](./readme_img/cosine.png) 
 
 ```bash
 $ python Denovo_cosine.py --ref_genome=[reference genome] --version=[version]
