@@ -1,0 +1,11 @@
+SigProfilerAssignment==0.1.7
+SigProfilerExtractor==1.1.24
+SigProfilerMatrixGenerator==1.2.26
+sigProfilerPlotting==1.3.23
+bio==1.7.1
+pandas==1.5.3
+scipy==1.8.0
+numpy==2.0.0
+matplotlib==3.9.1
+networkx==2.6.3
+seaborn==0.12.2
