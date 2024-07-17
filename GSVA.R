@@ -1,8 +1,12 @@
+#BiocManager::install(c('org.Hs.eg.db', 'AnnotationDbi'))
+#install.packages('data.table', 'dplyr', 'optparse')
+
 library(GSVA)
 library(data.table)
 library(org.Hs.eg.db)
 library(dplyr)
 library(optparse)
+library(AnnotationDbi)
 
 ##### Input #####
 option_list <- list(
