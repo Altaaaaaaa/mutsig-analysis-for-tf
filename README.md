@@ -18,12 +18,12 @@ If everything is ready, please put the mutation data that needs analysis in dire
 >The sample data is in directory named './sample'
 
 ## Installation
-Clone repository.
+1. Clone repository.
 ```
 git clone https://github.com/BML-cbnu/MutTF
 cd MutTF
 ```
-Install the requirments.
+2. Install the requirments.
 ```
 pip install -r requirements.txt
 ```
