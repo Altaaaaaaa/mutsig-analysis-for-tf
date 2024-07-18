@@ -74,7 +74,7 @@ $ python MatGen.py --ref_genome=[reference genome] --input_dir=[input data direc
   * [output data directory] => directory where output data is desired
 * The results made through **MatGen.py** were used as input data.
 * We use SBS96.all(96 types of mutations in Single Base Substitution).
-* After execution, the optimal number of signature will be selected and used for analysis (Refer to './ext_data/SBS/SBS96_selection_plot.pdf' for the best number of signature).
+* After execution, the optimal number of signature will be selected and used for analysis (Refer to './[output_dir]/SBS/SBS96_selection_plot.pdf' for the best number of signature).
 * The results are as shown in the tables below: <br>
 
 > Exposure Matrix
