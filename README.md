@@ -23,6 +23,10 @@ Clone repository.
 git clone https://github.com/BML-cbnu/MutTF
 cd MutTF
 ```
+Install the requirments.
+```
+pip install -r requirements.txt
+```
 
 ## How to execute code
 
