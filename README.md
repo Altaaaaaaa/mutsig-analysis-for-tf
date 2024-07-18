@@ -46,6 +46,7 @@ In the command line, please run the following:
 * output: count matrix (.all)
 * variable:
   * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
+  * [input data directory] => directory where vcf files are located
 * Use **SigprofilerMatrixGenerator** to convert input files into count matrix(M).
 * We referred from https://cancer.sanger.ac.uk/signatures/tools/.
 * The results are as shown in the table below:
@@ -69,6 +70,8 @@ $ python MatGen.py --ref_genome=[reference genome] --input_dir=[input data direc
   * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
   * [minimum] => Minimum number of signatures to extract
   * [maximum] => Maximum number of signatures to extract
+  * [input data directory] => same as step 1
+  * [output data directory] => directory where output data is desired
 * The results made through **MatGen.py** were used as input data.
 * We use SBS96.all(96 types of mutations in Single Base Substitution).
 * After execution, the optimal number of signature will be selected and used for analysis (Refer to './ext_data/SBS/SBS96_selection_plot.pdf' for the best number of signature).
