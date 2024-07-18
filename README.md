@@ -46,6 +46,7 @@ In the command line, please run the following:
 * output: count matrix (.all)
 * variable:
   * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
+  * [input data directory] => Enter the directory where input data(vcf files) is located.
 * Use **SigprofilerMatrixGenerator** to convert input files into count matrix(M).
 * We referred from https://cancer.sanger.ac.uk/signatures/tools/.
 * The results are as shown in the table below:
