@@ -91,7 +91,7 @@ $ python MatGen.py --ref_genome=[reference genome] --input_dir=[input data direc
 | ... | 0.081 | 0.068 |
 
 ```bash
-$ python NMF.py --ref_genome=[reference genome] --min=[minimum] --max=[maximum]
+$ python NMF.py --ref_genome=[reference genome] --min=[minimum] --max=[maximum] --input_dir=[input data directory] --output_dir=[output data directory]
 ```
 
 ---
