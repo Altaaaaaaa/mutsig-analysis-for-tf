@@ -7,10 +7,10 @@ from multiprocessing import Pool
 
 parser = argparse.ArgumentParser(description='gene_count')
 
-parser.add_argument('--ref_genome', required=True, help='select reference genome(e.g. GRCh37)')
-parser.add_argument('--input_dir', required=True, help='input data directory')
-parser.add_argument('--output_dir', required=True, help='output data directory')
-parser.add_argument('--threads', default = 10, type = int, help='threads to use in multiprocessing')
+parser.add_argument('-r', '--ref_genome', required=True, help='select reference genome(e.g. GRCh37)')
+parser.add_argument('-i', '--input_dir', required=True, help='input data directory')
+parser.add_argument('-o', '--output_dir', required=True, help='output data directory')
+parser.add_argument('-t', '--threads', default = 10, type = int, help='threads to use in multiprocessing')
 
 args = parser.parse_args()
 
