@@ -1,18 +1,10 @@
 # Mutational Signature Analysis tool
 
-This framework can discover candidate transcription factors(TFs) that regulate target gene expression by mutational signatures.
+MutTF is a multi-omics analysis framework that combines gene expression data with mutational signatures based on non-negative matrix decomposition and correlation analysis. MutTF can discover candidate transcription factors(TFs) that regulate target gene expression by mutational signatures.
 
 <!--
 나중에 여기에 논문 링크 넣기
 -->
-
-## Introduction of MutTF
-
->Background: Over the past decade, mutational signatures representing specific patterns of mutations have been studied to decipher the multiple causes of somatic mutations in cancer genome. However, previous studies have focused on identifying the novel mutational signatures or improving the accuracy of signature extraction. In this study, we propose a multi-omics analysis framework, MutTF, that discovers the candidate Mutational signatures that induce somatic mutations on Transcription Factors (TFs) and subsequently affect the regulation of target genes (TGs) of TFs.<br><br>
-Results: In this study, 59 colon cancer samples from PCAWG whole-genome sequencing data were analyzed with the proposed framework. Based on the correlation analysis between signature-wise mutation counts of TF and Gene Set Variation Analysis scores of TGs, we identified 14 significant Signature-TF pairs. Most of the pairs were further validated with VIPER and statistical tests to show that expressions of TGs or TF itself were significantly different between samples with and without signature-induced mutations.<br><br>
-Conclusions: The proposed framework enabled the selection of mutational signatures that influenced TF’s regulation on TGs in colorectal cancer, including three pairs that showed differential expression in both TF and TGs: SBS10a-ZBTB7B, SBS10b-GMEB2, and SBS94-RORA. Most of the signatures and TF genes detected by MutTF were relevant to colorectal cancer based on literature analysis, showing the reliability of the proposed framework.
-
-<br>
 
 ![Workflow of 'MutTF'](./readme_img/workflow_new.png)
 
@@ -47,7 +39,7 @@ In the command line, please run the following:
 ### Step1. Matrix Generator
 
 * input: vcf file
-* output: Matrix file (.all)
+* output: count matrix (.all)
 * variable:
   * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
 * Use **SigprofilerMatrixGenerator** to convert input files into count matrix(M).
@@ -61,13 +53,14 @@ In the command line, please run the following:
 | ... | 214 | 654 |
 
 ```bash
-$ python MatGen.py --ref_genome=[reference genome]
+$ python MatGen.py --ref_genome=[reference genome] --input_dir=[input data directory]
 ```
 
 ---
 ### Step2. NMF
 
-* input: count matrix(M)
+* input: count matrix (M)
+* output: process matrix (P), exposure matrix (E)
 * variable:
   * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
   * [minimum] => Minimum number of signatures to extract
@@ -102,6 +95,7 @@ $ python NMF.py --ref_genome=[reference genome] --min=[minimum] --max=[maximum]
 ### Step3. Gene_count
 
 * input: vcf file, fasta, gtf file
+* output: gene count matrix for each sample
 * variable:
   * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
 * Before we calculate the contribution of signatures, we need **gene-specific counts** from a particular gene region.
@@ -134,7 +128,8 @@ $ python GSVA.py -g [Original TF-TG geneset data] -e [Expression file] -o1 [Sepa
 ### Step5. MutTF
 
 * Our main analysis model, **'MutTF'**
-* input: Gene count Matrix, GSVA score, TF-TG  data
+* input: gene count matrix, GSVA score, TF-TG  data
+* output: analysis matrix (gene id, signature id, correlation coefficient, p-value)
 * variable:
   * [gsva_result_folder] => Enter the directory where the results file from **gsva.py** is located.
   * [tf_database_file] => Enter the TF-TG database file you want to analyze
@@ -158,6 +153,7 @@ $ python MutTF.py --gsva_folder=[gsva_result_folder] --tf_file=[tf_database_file
 **Node_classification**
 
 * input: gene expression data
+* output: file as a result of node classification
 * variable:
   * [pos or neg] => Enter the group for which you want to proceed node classification (pos or neg)
   * [tg divided into two groups] => As a result of correlation analysis based on gene expression, it means tf-tg data divided into positive and negative.
@@ -175,6 +171,7 @@ $ python Node_classification.py --pos_neg=[pos or neg] --tf_group_file=[tg divid
 **Denovo_cosine**
 
 * input: matrix P
+* output: image showing cosine similarity
 * variable:
   * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
   * [version] => Enter the version of cosmic signature you want to compare (e.g. 3.3.1)
