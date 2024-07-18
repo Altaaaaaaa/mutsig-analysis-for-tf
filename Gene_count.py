@@ -5,14 +5,13 @@ import time
 import pandas as pd
 from multiprocessing import Pool
 
-# 인자값을 받을 수 있는 인스턴스 생성
 parser = argparse.ArgumentParser(description='gene_count')
 
-# 입력받을 인자값 등록
-parser.add_argument('--ref_genome', required=True, help='select reference genome(e.g. GRCh37)')
+parser.add_argument('-r', '--ref_genome', required=True, help='select reference genome(e.g. GRCh37)')
+parser.add_argument('-i', '--input_dir', required=True, help='input data directory')
+parser.add_argument('-o', '--output_dir', required=True, help='output data directory')
+parser.add_argument('-t', '--threads', default = 10, type = int, help='threads to use in multiprocessing')
 
-
-# 입력받은 인자값을 args에 저장 (type: namespace)
 args = parser.parse_args()
 
 
@@ -52,7 +51,7 @@ chrs = [s.id for s in seqs]
 
 flist = []
 
-input_folder = './input_data/'
+input_folder = args.input_dir
 
 for fname in os.listdir(input_folder): 
     if fname[-4:] == '.vcf':
@@ -120,9 +119,7 @@ def calculate(i): # vcf 파일 반복
     print(f"Time: {hours}:{minutes}:{seconds}", file = f)
     f.close()
 
-
-    ##### 지정
-    df.to_csv('./Gene_count/' + fname[:-4] + '_cnt.csv', sep=',', index=True, header=True)
+    df.to_csv(f'{args.output_dir}/Gene_count/{fname[:-4]}_cnt.csv', sep=',', index=True, header=True)
 
 
 
@@ -142,5 +139,6 @@ def calculate(i): # vcf 파일 반복
 
 
 if __name__ == "__main__":
-    pool = Pool(processes = 10)
+    pool = Pool(processes = args.threads)
+    os.makedirs(f'{args.output_dir}/Gene_count', exist_ok = True)
     result = pool.map(calculate, range(len(flist)))

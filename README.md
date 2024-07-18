@@ -46,6 +46,7 @@ In the command line, please run the following:
 * output: count matrix (.all)
 * variable:
   * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
+  * [input data directory] => directory where vcf files are located
   * [input data directory] => Enter the directory where input data(vcf files) is located.
 * Use **SigprofilerMatrixGenerator** to convert input files into count matrix(M).
 * We referred from https://cancer.sanger.ac.uk/signatures/tools/.
@@ -70,9 +71,11 @@ $ python MatGen.py --ref_genome=[reference genome] --input_dir=[input data direc
   * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
   * [minimum] => Minimum number of signatures to extract
   * [maximum] => Maximum number of signatures to extract
+  * [input data directory] => same as step 1
+  * [output data directory] => directory where output data is desired
 * The results made through **MatGen.py** were used as input data.
 * We use SBS96.all(96 types of mutations in Single Base Substitution).
-* After execution, the optimal number of signature will be selected and used for analysis (Refer to './ext_data/SBS/SBS96_selection_plot.pdf' for the best number of signature).
+* After execution, the optimal number of signature will be selected and used for analysis (Refer to './[output_dir]/SBS/SBS96_selection_plot.pdf' for the best number of signature).
 * The results are as shown in the tables below: <br>
 
 > Exposure Matrix
@@ -92,7 +95,7 @@ $ python MatGen.py --ref_genome=[reference genome] --input_dir=[input data direc
 | ... | 0.081 | 0.068 |
 
 ```bash
-$ python NMF.py --ref_genome=[reference genome] --min=[minimum] --max=[maximum]
+$ python NMF.py --ref_genome=[reference genome] --min=[minimum] --max=[maximum] --input_dir=[input data directory] --output_dir=[output data directory]
 ```
 
 ---
