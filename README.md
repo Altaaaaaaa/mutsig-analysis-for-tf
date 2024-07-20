@@ -10,12 +10,9 @@ MutTF is a multi-omics analysis framework that combines gene expression data wit
 
 ## Input Data
 
-Input data should be put in **vcf files** representing **mutation counts**.
+1. Variant files (.vcf)
+2. Expression file (.tsv)
 
-
-If everything is ready, please put the mutation data that needs analysis in directory named './input_data'
-
->The sample data is in directory named './sample'
 
 ## Installation
 1. Clone repository.
@@ -28,129 +25,137 @@ cd MutTF
 pip install -r requirements.txt
 ```
 
+
 ## How to execute code
 
-- [Step1) Matrix Generator](#Step1-Matrix-Generator)   
-- [Step2) NMF](#Step2-NMF)   
-- [Step3) Gene_count](#Step3-Gene_count)   
-- [Step4) gsva](#Step4-gsva)   
-- [Step5) MutTF](#Step5-MutTF)
+- [Step1) Mutation signature extraction](#Step1-Mutational-signature-extraction)  
+- [Step2) Gene_count](#Step3-Gene_count)   
+- [Step3) gsva](#Step4-gsva)   
+- [Step4) MutTF](#Step5-MutTF)
 - [Optional step](#Optional-Code)   
-   
 
+   
 In the command line, please run the following:
 
-### Step1. Matrix Generator
+### Step1. Mutational signature extraction
 
-* input: vcf file
-* output: count matrix (.all)
+* input:
+  VCF file per sample
+* variable:
+  [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
+  [minimum] => Minimum number of signatures to extract
+  [maximum] => Maximum number of signatures to extract
+  [input directory] => directory where vcf files are located (e.g. input_data).
+  [output directory] => directory where the output data should be stored.
+  [threads] => number of threads to use in signature extraction
+* Description:
+  Used **SigprofilerMatrixGenerator** to convert vcf files into count matrix, and used **sigProfilerExtractor** to extract signatures based on the count matrix generated.
+  The optimal number of signature will be selected and used for further analysis. (Refer to './[output directory]/SBS96/SBS96_selection_plot.pdf' for the best number of signature)
+  In this project, we extracted SBS96-based signatures (96 types of mutations in Single Base Substitution).
+  Refer to https://cancer.sanger.ac.uk/signatures/tools/.
+* output:
+  Signature extraction results
+  The results are as shown in the tables below: <br>
+
+  > Exposure Matrix (./[output directory]/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Activities/SBS96_De-Novo_Activities_refit.txt)
+
+   | Samples | SBS96A | SBS96B | ... |
+   | --- | --- | --- | --- |
+   | Sample 1 | 22 | 40 |
+   | Sample 2 | 35 | 13 |
+   | ... | 16 | 32 |
+
+  > Process Matrix ((./[output directory]/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Signatures/SBS96_De-Novo_Signatures.txt)
+
+   | MutationType | SBS96A | SBS96B | ... |
+   | --- | --- | --- | --- |
+   | A[C>A]A | 0.024 | 0.014 |
+   | A[C>A]C | 0.012 | 0.052 |
+   | ... | 0.081 | 0.068 |
+
+```bash
+$ python Signature_extraction.py --ref_genome=[reference genome] --minimum=[minimum] --maximum=[maximum] --input_dir=[input data directory] --output_dir=[output data directory] --threads=[threads]
+```
+
+---
+
+### Step2. Gene_count
+
+* input:
+  VCF file per sample
 * variable:
   * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
-  * [input data directory] => directory where vcf files are located
-* Use **SigprofilerMatrixGenerator** to convert input files into count matrix(M).
-* We referred from https://cancer.sanger.ac.uk/signatures/tools/.
-* The results are as shown in the table below:
+  * [input directory] => directory where vcf files are located (e.g. input_data).
+  * [output directory] => directory where the output data should be stored.
+  * [threads] => number of threads to use in multiprocessing
+* Description:
+  Before we calculate the contribution of signatures, we need **gene-specific mutation counts** calculated using the annotation file of reference genome.
+* output:
+  Gene count file per sample
+  The results are as shown in the table below:
 
-| MutationType | Sample 1 | Sample 2 | ... |
-| --- | --- | --- | --- |
-| A[C>A]A | 200 | 143 |
-| A[C>A]C | 21 | 131 |
-| ... | 214 | 654 |
+   |  | Gene 1 | Gene 2 | ... |
+   | --- | --- | --- | --- |
+   | ACA>A | 2 | 0 |
+   | ACC>A | 0 | 1 |
+   | ... | 1 | 1 |
 
 ```bash
-$ python MatGen.py --ref_genome=[reference genome] --input_dir=[input data directory]
+$ python Gene_count.py --ref_genome=[reference genome] --input_dir=[input directory] --output_dir=[output directory] --threads=[threads]
 ```
 
 ---
-### Step2. NMF
 
-* input: count matrix (M)
-* output: process matrix (P), exposure matrix (E)
+### Step3. GSVA
+
+* input:
+  TF-TG geneset file, Expression file
 * variable:
-  * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
-  * [minimum] => Minimum number of signatures to extract
-  * [maximum] => Maximum number of signatures to extract
-  * [input data directory] => same as step 1
-  * [output data directory] => directory where output data is desired
-* The results made through **MatGen.py** were used as input data.
-* We use SBS96.all(96 types of mutations in Single Base Substitution).
-* After execution, the optimal number of signature will be selected and used for analysis (Refer to './[output_dir]/SBS/SBS96_selection_plot.pdf' for the best number of signature).
-* The results are as shown in the tables below: <br>
+  * [TF-TG geneset file] => TF-TG geneset file (e.g. ./hTFTarget/colon_TF-Target-information.txt)
+  * [Expression file] => File name of gene expression file
+  * [GSVA output file] => File name of GSVA output results
+* Description:
+  Seperate TG into positively and negatively regulated groups based on correlation coefficient with corresponding TF expression value.
+  Based on these groups, perform GSVA.
+* output:
+  GSVA output file
+  The results are as shown in the table below:
 
-> Exposure Matrix
-
-| Samples | SBS96A | SBS96B | ... |
-| --- | --- | --- | --- |
-| Sample 1 | 22 | 40 |
-| Sample 2 | 35 | 13 |
-| ... | 16 | 32 |
-
-> Process Matrix
-
-| MutationType | SBS96A | SBS96B | ... |
-| --- | --- | --- | --- |
-| A[C>A]A | 0.024 | 0.014 |
-| A[C>A]C | 0.012 | 0.052 |
-| ... | 0.081 | 0.068 |
+   | Genesets | Sample 1 | Sample 2 | ... |
+   | --- | --- | --- | --- |
+   | TF1_0 | 0.4 | 0.3 |
+   | TF1_1 | -0.9 | -0.1 |
+   | ... | 0.1 | -0.6 |      
 
 ```bash
-$ python NMF.py --ref_genome=[reference genome] --min=[minimum] --max=[maximum] --input_dir=[input data directory] --output_dir=[output data directory]
+$ python GSVA.py -g [TF-TG geneset file] -e [Expression file] -o [GSVA output file]
 ```
 
 ---
 
-### Step3. Gene_count
+### Step4. MutTF
 
-* input: vcf file, fasta, gtf file
-* output: gene count matrix for each sample
+* input:
+  Signature extraction results, Gene count matrix per sample, Seperated TF-TG geneset, GSVA results
 * variable:
-  * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
-* Before we calculate the contribution of signatures, we need **gene-specific counts** from a particular gene region.
-* It is a code that calculates gene-specific counts using the annotation file of reference genome.
-* The results are as shown in the table below:
+  * [Signature extraction directory] => Directory of signature extraction results (output from **Signature_extraction.py**)
+  * [Gene count directory] => Directory with gene-wise mutation count files (output from **Gene_count.py**)
+  * [TF-TG geneset file] => TF-TG geneset file used in **GSVA.py** (e.g. ./hTFTarget/colon_TF-Target-information.txt)
+  * [GSVA output file] => File name of GSVA results (output from **GSVA.py**)
+  * [Correlation output directory] => Directory of correlation results between signature-induced mutation count and GSVA
+* Description:
+  Calculate the signature's contribution (by sample).
+  Analyze the correlation between gene-specific counts by signature and the GSVA score.
+* output:
+  Correlation result matrix (gene id, signature id, correlation coefficient, p-value)
+  The results are as shown in the table below:
 
-|  | Gene 1 | Gene 2 | ... |
-| --- | --- | --- | --- |
-| ACA>A | 2 | 0 |
-| ACC>A | 0 | 1 |
-| ... | 1 | 1 |
-
-```bash
-$ python Gene_count.py --ref_genome=[reference genome]
-```
-
----
-
-### Step4. GSVA
-
-* input: Original TF-TG geneset data, Expression file
-* output : separated TF-TG geneset data, GSVA output file
+   | No. | Gene | sig | r | p |
+   | --- | --- | --- | --- | --- |
+   | 0 | Gene id | signature id | correlation coefficient | p-value |
 
 ```bash
-$ python GSVA.py -g [Original TF-TG geneset data] -e [Expression file] -o1 [Separated TF-TG geneset data] -o2 [GSVA output file]
-```
-
----
-
-### Step5. MutTF
-
-* Our main analysis model, **'MutTF'**
-* input: gene count matrix, GSVA score, TF-TG  data
-* output: analysis matrix (gene id, signature id, correlation coefficient, p-value)
-* variable:
-  * [gsva_result_folder] => Enter the directory where the results file from **gsva.py** is located.
-  * [tf_database_file] => Enter the TF-TG database file you want to analyze
-* Calculate the signature's contribution (by sample).
-* The correlation between gene-specific counts by signature and the GSVA score was analyzed.
-* The result file is saved in the directory named './output/Cor/'.
-* The results are as shown in the table below:
-
-| No. | Gene | sig | r | p |
-| --- | --- | --- | --- | --- |
-| 0 | Gene id | signature id | correlation coefficient | p-value |
-
-```bash
-$ python MutTF.py --gsva_folder=[gsva_result_folder] --tf_file=[tf_database_file]
+$ python MutTF.py --ext_dir=[Signature extraction directory] --count_dir=[Gene count directory] --tf_file=[TF-TG geneset file] --gsva_folder=[GSVA output file] --corr_dir=[Correlation output directory]
 ```
 
 ---
