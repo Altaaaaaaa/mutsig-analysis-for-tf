@@ -6,14 +6,13 @@ from numpy.linalg import norm
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# 인자값을 받을 수 있는 인스턴스 생성
 parser = argparse.ArgumentParser(description='de novo-cosmic cosine similarity')
 
-# 입력받을 인자값 등록
+parser.add_argument('--in_dir', required=True, help='Directory of vcf files')
+parser.add_argument('--ext_dir', required=True, help='Directory of signature extraction results')
 parser.add_argument('--ref_genome', required=True, help='select reference genome(e.g. GRCh37)')
 parser.add_argument('--version', required=True, help='select cosmic signature version(e.g. 3.3)')
 
-# 입력받은 인자값을 args에 저장 (type: namespace)
 args = parser.parse_args()
 
 
@@ -47,10 +46,10 @@ def cos(P,COSMIC_P):
         if max(sim) >= 0: # 0.85이상으로 고치기     # sim 리스트의 가장 큰 값 출력
             print(P.columns[i],'is similar to', COSMIC_P.columns[cosmax], ' The similarity is', max(sim))
 
-    # heatmap 그리기
+    # Draw heatmap
     cossim2 = cossim.astype(float) # datatype 변환
 
-    plt.figure(figsize = (30, len(P.columns))) # (cosmic signature 개수, de novo signature 개수)
+    plt.figure(figsize = (30, len(P.columns))) # (# of cosmic signature, # of de novo signature)
     sns.heatmap(cossim2, cmap='coolwarm', 
                     annot=True,
                     fmt=".3f",
@@ -62,7 +61,7 @@ def cos(P,COSMIC_P):
     cossim2 = cossim.astype(float)
 
     plt.show()
-    plt.savefig("./output/Comp_cosmic/Heatmap.png",dpi=300) # 플롯을 사진 파일로 저장
+    plt.savefig('Heatmap.png',dpi=300) 
 
 
 
@@ -72,8 +71,8 @@ def cos(P,COSMIC_P):
 
 
 
-COSMIC_P = pd.read_csv("./data/COSMIC_v"+str(args.version)+'_SBS_'+str(args.ref_genome)+'.txt', sep='\t', index_col=0) # COSMIC의 Signature
-P1 = pd.read_csv("./ext_data/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Signatures/SBS96_De-Novo_Signatures.txt", sep='\t', index_col=0).sort_values(by='MutationType') #Extractor 결과 중 process 사용
+COSMIC_P = pd.read_csv(f"{args.in_dir}/COSMIC_v"+str(args.version)+'_SBS_'+str(args.ref_genome)+'.txt', sep='\t', index_col=0) # COSMIC의 Signature
+P1 = pd.read_csv(f"{args.ext_dir}/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Signatures/SBS96_De-Novo_Signatures.txt", sep='\t', index_col=0).sort_values(by='MutationType') #Extractor 결과 중 process 사용
 
 
 
