@@ -51,7 +51,7 @@ In the command line, please run the following:
 * Description: <br>
   Used **SigprofilerMatrixGenerator** to convert vcf files into count matrix, and used **sigProfilerExtractor** to extract signatures based on the count matrix generated.
   The optimal number of signature will be selected and used for further analysis. (Refer to './[output directory]/SBS96/SBS96_selection_plot.pdf' for the best number of signature)
-  In this project, we extracted SBS96-based signatures (96 types of mutations in Single Base Substitution).
+  In this project, we used SBS96-based signatures (96 types of mutations in Single Base Substitution) in further analysis.
   Refer to https://cancer.sanger.ac.uk/signatures/tools/.
 * output: <br>
   Signature extraction results
