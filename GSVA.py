@@ -10,8 +10,7 @@ parser = argparse.ArgumentParser(description="Performing GSVA based on TF-TG gen
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("-g", "--geneset", help="Path to original geneset file (.csv)")
 parser.add_argument("-e", "--expression", help="Path to expression file (.tsv)")
-parser.add_argument("-o1", "--sep", help="Path to separated geneset output file (.tsv)")
-parser.add_argument("-o2", "--gsva", help="Path to GSVA output file (.tsv)")
+parser.add_argument("-o", "--gsva", help="Path to GSVA output file (.tsv)")
 args = vars(parser.parse_args())
 
 ##### Load input files #####
@@ -61,11 +60,11 @@ for i in tqdm(range(len(TF_name_list))):
 
 colon_TF_TG_corp = colon_TF_TG_cor[colon_TF_TG_cor['p']<=0.05]
 
-colon_TF_TG_corp.to_csv(args['sep'], sep='\t', index=True, header=True)
+colon_TF_TG_corp.to_csv(f"{args['geneset'][:-4]}_sep.txt", sep='\t', index=True, header=True)
 
 
 ##### Perform GSVA #####
 
 print('Perform GSVA')
 
-os.system(f"Rscript GSVA.R -g {args['sep']} -e {args['expression']} -o {args['gsva']}")
+os.system(f"Rscript GSVA.R -g {args['geneset'][:-4]}_sep.txt -e {args['expression']} -o {args['gsva']}")
