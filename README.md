@@ -164,34 +164,41 @@ $ python MutTF.py --ext_dir=[Signature extraction directory] --count_dir=[Gene c
 
 **Node_classification**
 
-* input: gene expression data
-* output: file as a result of node classification
-* variable:
-  * [pos or neg] => Enter the group for which you want to proceed node classification (pos or neg)
-  * [tg divided into two groups] => As a result of correlation analysis based on gene expression, it means tf-tg data divided into positive and negative.
-  * [the number of signatures] => The optimal number of signatures used for analysis
-* You can proceed with node classification for multi-signature gene based on the result file from **Step 5**.
-* The result file is saved in the directory named './output/Node_classi/'.
-* The visualized graph figure is saved as './output/Node_classi/node_figure_XXX.png'
+* input: <br>
+  Correlation results, GSVA results
+* variable: <br>
+  * [Correlation results] => File name of correlation results (output from **MutTF.py**)
+  * [direction] => Enter the group for which you want to proceed node classification (pos or neg)
+  * [GSVA results] => File name of GSVA results (output from **GSVA.py**)
+  * [Number of signatures] => The optimal number of signatures used for analysis
+  * [Output directory] => Directory of node classification results
+* output: <br>
+  Files including result of node classification and visualization.
+  The visualized graph figure is saved as '[Output_directory]/node_figure_XXX.png'
 
 ```bash
-$ python Node_classification.py --pos_neg=[pos or neg] --tf_group_file=[tg divided into two groups] --sig_num=[the number of signatures]
+$ python Node_classification.py --corr_dir=[Correlation results] --pos_neg=[direction] --gsva=[GSVA file] --sig_num=[Number of signatures] --out_dir=[Output directory]
 ```
 
 ---
 
 **Denovo_cosine**
 
-* input: matrix P
-* output: image showing cosine similarity
-* variable:
-  * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
-  * [version] => Enter the version of cosmic signature you want to compare (e.g. 3.3.1)
+* input: <br>
+  matrix P
+* variable: <br>
+  [Input directory] => Directory with input vcf files
+  [Signature extraction directory] => Directory of signature extraction results
+  [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
+  [version] => Enter the version of cosmic signature you want to compare (e.g. 3.3.1)
+* output: <br>
+  image showing cosine similarity
+
 * A heat map shows how the optimal signature extracted by De novo Signatures from **NMF.py** is similar to the cosmic signature.
 * We referred from https://cancer.sanger.ac.uk/signatures/downloads/.
 * Examples are as follows:
 ![Denovo_cosine](./readme_img/cosine.png) 
 
 ```bash
-$ python Denovo_cosine.py --ref_genome=[reference genome] --version=[version]
+$ python Denovo_cosine.py --in_dir=[Input directory] --ext_dir=[Signature extraction directory] --ref_genome=[reference genome] --version=[version]
 ```
