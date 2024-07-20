@@ -8,7 +8,6 @@ import seaborn as sns
 
 parser = argparse.ArgumentParser(description='de novo-cosmic cosine similarity')
 
-parser.add_argument('--in_dir', required=True, help='Directory of vcf files')
 parser.add_argument('--ext_dir', required=True, help='Directory of signature extraction results')
 parser.add_argument('--ref_genome', required=True, help='select reference genome(e.g. GRCh37)')
 parser.add_argument('--version', required=True, help='select cosmic signature version(e.g. 3.3)')
@@ -71,8 +70,8 @@ def cos(P,COSMIC_P):
 
 
 
-COSMIC_P = pd.read_csv(f"{args.in_dir}/COSMIC_v"+str(args.version)+'_SBS_'+str(args.ref_genome)+'.txt', sep='\t', index_col=0) # COSMIC의 Signature
-P1 = pd.read_csv(f"{args.ext_dir}/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Signatures/SBS96_De-Novo_Signatures.txt", sep='\t', index_col=0).sort_values(by='MutationType') #Extractor 결과 중 process 사용
+COSMIC_P = pd.read_csv("./data/COSMIC_v"+str(args.version)+'_SBS_'+str(args.ref_genome)+'.txt', sep='\t', index_col=0)
+P1 = pd.read_csv(f"{args.ext_dir}/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Signatures/SBS96_De-Novo_Signatures.txt", sep='\t', index_col=0).sort_values(by='MutationType')
 
 
 
