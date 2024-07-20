@@ -191,7 +191,6 @@ $ python Node_classification.py --corr_dir=[Correlation results] --pos_neg=[dire
 * input: <br>
   matrix P
 * variable: <br>
-  [Input directory] => Directory with input vcf files
   [Signature extraction directory] => Directory of signature extraction results
   [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
   [version] => Enter the version of cosmic signature you want to compare (e.g. 3.3.1)
@@ -204,5 +203,5 @@ $ python Node_classification.py --corr_dir=[Correlation results] --pos_neg=[dire
 ![Denovo_cosine](./readme_img/cosine.png) 
 
 ```bash
-$ python Denovo_cosine.py --in_dir=[Input directory] --ext_dir=[Signature extraction directory] --ref_genome=[reference genome] --version=[version]
+$ python Denovo_cosine.py --ext_dir=[Signature extraction directory] --ref_genome=[reference genome] --version=[version]
 ```
