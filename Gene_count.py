@@ -7,27 +7,12 @@ from multiprocessing import Pool
 
 parser = argparse.ArgumentParser(description='gene_count')
 
-parser.add_argument('-r', '--ref_genome', required=True, help='select reference genome(e.g. GRCh37)')
+parser.add_argument('-r', '--ref_genome', choices = ['GRCh37', 'GRCh38'], required=True, help='select reference genome(e.g. GRCh37)')
 parser.add_argument('-i', '--input_dir', required=True, help='input data directory')
 parser.add_argument('-o', '--output_dir', required=True, help='output data directory')
 parser.add_argument('-t', '--threads', default = 10, type = int, help='threads to use in multiprocessing')
 
 args = parser.parse_args()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Mutation Count
 def changeValue(before, after):
@@ -42,6 +27,11 @@ def changeValue(before, after):
     if before == 'A' and after == 'C':
         return 'T', 'G'
     return before, after
+
+# Download fasta file
+ref_genome = 'hg19' if args.ref_genome == 'GRCh37' else 'hg38'
+os.system(f'wget -O ./data/{ref_genome}.fa.gz https://hgdownload.soe.ucsc.edu/goldenPath/{ref_genome}/bigZips/{ref_genome}.fa.gz')
+os.system(f'gunzip ./data/{ref_genome}.fa.gz')
 
 genes = './data/gene_'+str(args.ref_genome)+'.txt'
 seqs = list(SeqIO.parse('./data/'+str(args.ref_genome)+'.fa', 'fasta'))
@@ -120,23 +110,6 @@ def calculate(i): # vcf 파일 반복
     f.close()
 
     df.to_csv(f'{args.output_dir}/Gene_count/{fname[:-4]}_cnt.csv', sep=',', index=True, header=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
     pool = Pool(processes = args.threads)
