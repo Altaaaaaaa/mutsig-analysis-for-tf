@@ -4,51 +4,22 @@ import pandas as pd
 import numpy as np
 import scipy.stats as stat
 
-# 인자값을 받을 수 있는 인스턴스 생성
 parser = argparse.ArgumentParser(description='mutational signature analysis program')
 
-# 입력받을 인자값 등록
-parser.add_argument('--gsva_folder', required=True, help='gsva_result_folder')
-parser.add_argument('--tf_file', required=True, help='tf_database_file')
+parser.add_argument('--ext_dir', required=True, help = 'Directory of signature extraction output')
+parser.add_argument('--gsva_file', required=True, help='File name of GSVA output')
+parser.add_argument('--count_dir', required=True, help='Directory of gene count output')
+parser.add_argument('--tf_file', required=True, help='File name of TF-TG database')
+parser.add_argument('--corr_dir', required=True, help = 'Output directory of correlation results')
 
-# 입력받은 인자값을 args에 저장 (type: namespace)
 args = parser.parse_args()
-
-
-
-
-
-
-
-
-
-
-
-
-# Gene count 불러오기
-yMatList = []
-
-for fName in os.listdir("./Gene_count"):
-    if fName[-4:] == '.csv':
-        yMatList.append(pd.read_csv("./Gene_count/" + fName, index_col=0)) # [:11]
         
 
-ext_P = pd.read_csv("./ext_data/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Signatures/SBS96_De-Novo_Signatures.txt", sep='\t', index_col=0) #Extractor 결과 중 process 사용
-ext_E = pd.read_csv("./ext_data/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Activities/SBS96_De-Novo_Activities_refit.txt", sep='\t', index_col=0) #Extractor 결과 중 exposure 사용
+ext_P = pd.read_csv(f"./{args.ext_dir}/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Signatures/SBS96_De-Novo_Signatures.txt", sep='\t', index_col=0) #Extractor 결과 중 process 사용
+ext_E = pd.read_csv(f"./{args.ext_dir}/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Activities/SBS96_De-Novo_Activities_refit.txt", sep='\t', index_col=0) #Extractor 결과 중 exposure 사용
 
 
-
-
-
-
-
-
-
-
-
-
-
-# Contribution 계산
+# Calculated contribution
 
 def cal_contri(file_name,p_mat,e_mat):
     #E = E.T
@@ -92,45 +63,22 @@ contri_dict = dict(zip(contri_name,cList))
 contri_dict = dict(sorted(contri_dict.items()))
 
 
+# TF extraction in TF-TG database file
 
-
-
-
-
-
-
-
-
-# TF 추출 -> 저장
-
-db_TF = pd.read_csv(str(args.tf_file), sep=',', index_col=0) # TF 데이터
+db_TF = pd.read_csv(str(args.tf_file), sep=',', index_col=0) 
 
 db_TF_list = list(set(db_TF['name']))
 
-with open('./output/tf/tf_name_list.txt', 'a') as file:
-    file.write('\n'.join(db_TF_list))
 
+# Load gene count
 
-
-
-
-
-
-
-
-
-
-
-
-# Gene count 불러오기
-
-count_folder = "./Gene_count"
+count_folder = args.count_dir
 count = []
 count_name = []
 
 for fName in os.listdir(count_folder):
     if fName[-4:] == '.csv' and fName[-7:-4] == 'cnt':
-        count.append(pd.read_csv(count_folder + "/" + fName, sep=',', index_col=0)) # 입력받는 파일
+        count.append(pd.read_csv(count_folder + "/" + fName, sep=',', index_col=0))
         count_name.append(fName[:-8])
 
 count_dict = dict(zip(count_name,count))
@@ -139,49 +87,23 @@ count_dict = dict(sorted(count_dict.items()))
 smp_name = list(count_dict.keys())
 
 
+# Save only TF genes
 
+# count_TF = []
+# for name in smp_name:
+#     sample_sym = count_dict[name][db_TF_list]
+#     count_TF.append(sample_sym)
 
-
-
-
-
-
-
-
-
-
-
-
-# Gene id가 TF인 것만 추출하여 저장
-
-count_TF = []
-for name in smp_name:
-    sample_sym = count_dict[name][db_TF_list]
-    count_TF.append(sample_sym)
-
-for i in range(len(smp_name)):
-    count_TF[i].to_csv('./TF_count/'+smp_name[i]+'_TF.csv')
+# for i in range(len(smp_name)):
+#     count_TF[i].to_csv('./TF_count/'+smp_name[i]+'_TF.csv')
 
 count_TF_dict = dict(zip(smp_name,count_TF))
 count_TF_dict = dict(sorted(count_TF_dict.items()))
 
 
+# Load GSVA results
 
-
-
-
-
-
-
-
-
-
-
-
-
-# gsva 결과 파일 가져오기
-
-gsva_d = pd.read_csv(str(args.gsva_folder), sep='\t', index_col=0) # gsva score
+gsva_d = pd.read_csv(str(args.gsva_file), sep='\t', index_col=0)
 
 gsva_data = []
 gsva_gene = []
@@ -200,44 +122,14 @@ gsva_data.append(df0)
 gsva_data.append(df1)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# count 파일의 gene id와 일치하는 것만 남김
+# Leave genes in GSVA file matching genes in gene count file
 gsva_TF = list(count_TF[0].columns)
 
 for i in range(len(gsva_data)):
     gsva_data[i] = gsva_data[i][gsva_data[i].index.isin(gsva_TF)]
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# correlation 분석
+# Correlation analysis
 
 column = ['gene', 'sig', 'c', 'p']
 
@@ -279,20 +171,7 @@ for gs in range(len(gsva_data)):
             df.loc[index, 'p'] = p_value
             index += 1
 
-    df.to_csv('./output/Cor/Result_'+pn[gs]+'.csv')  # correlation 분석 결과
-
-
-
-
-
-
-
-
-
-
-
-
-
+    df.to_csv(f'./{args.corr_dir}/Result_'+pn[gs]+'.csv') 
 
 
 # Filtering
@@ -301,17 +180,17 @@ for gs in range(len(gsva_data)):
     PartRe_list = []
     sig_df = pd.DataFrame(columns=df.columns)
     cnt = 0
-    for s in range(9):  # 시그니쳐 개수에 따라 range 변경
-        cal_df = pd.DataFrame(columns=df.columns)  # columns=columns
+    for s in range(9):  
+        cal_df = pd.DataFrame(columns=df.columns)  
         idx = 0
-        for i in range(len(df)):  # 총 행만큼 반복하기
+        for i in range(len(df)): 
             if df.iloc[i, 2] == '' or df.iloc[i, 3] == '': continue
             # Num = int(df.iloc[i,0])
             Sig = int(df.iloc[i, 1])
             Cor = float(df.iloc[i, 2])
             P_val = float(df.iloc[i, 3])
-            if Sig == s and Cor >= 0.35 and P_val <= 0.05: # Cor <= -0.9 and
-                print(Sig, Cor, P_val) # 확인을 위해서 출력
+            if Sig == s and Cor >= 0.35 and P_val <= 0.05: 
+                print(Sig, Cor, P_val) 
                 cal_df.loc[idx, :] = df.iloc[i, :]
                 sig_df.loc[cnt, :] = df.iloc[i, :]
                 idx += 1
@@ -320,5 +199,5 @@ for gs in range(len(gsva_data)):
 
         PartRe_list.append(cal_df)
     sig_df.drop(cal_df.columns[1], axis=1)
-    sig_df.to_csv('./output/Cor/Filt_Result_'+pn[gs]+'.csv', sep=',', index=True, header=True) 
+    sig_df.to_csv(f'./{args.corr_dir}/Filt_Result_'+pn[gs]+'.csv', sep=',', index=True, header=True) 
 
