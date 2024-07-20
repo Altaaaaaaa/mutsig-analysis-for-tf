@@ -39,21 +39,21 @@ In the command line, please run the following:
 
 ### Step1. Mutational signature extraction
 
-* input:
+* input: <br>
   VCF file per sample
-* variable:
+* variable: <br>
   [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
   [minimum] => Minimum number of signatures to extract
   [maximum] => Maximum number of signatures to extract
   [input directory] => directory where vcf files are located (e.g. input_data).
   [output directory] => directory where the output data should be stored.
   [threads] => number of threads to use in signature extraction
-* Description:
+* Description: <br>
   Used **SigprofilerMatrixGenerator** to convert vcf files into count matrix, and used **sigProfilerExtractor** to extract signatures based on the count matrix generated.
   The optimal number of signature will be selected and used for further analysis. (Refer to './[output directory]/SBS96/SBS96_selection_plot.pdf' for the best number of signature)
   In this project, we extracted SBS96-based signatures (96 types of mutations in Single Base Substitution).
   Refer to https://cancer.sanger.ac.uk/signatures/tools/.
-* output:
+* output: <br>
   Signature extraction results
   The results are as shown in the tables below: <br>
 
@@ -81,18 +81,18 @@ $ python Signature_extraction.py --ref_genome=[reference genome] --minimum=[mini
 
 ### Step2. Gene_count
 
-* input:
+* input: <br>
   VCF file per sample
-* variable:
+* variable: <br>
   * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
   * [input directory] => directory where vcf files are located (e.g. input_data).
   * [output directory] => directory where the output data should be stored.
   * [threads] => number of threads to use in multiprocessing
-* Description:
+* Description: <br>
   Before we calculate the contribution of signatures, we need **gene-specific mutation counts** calculated using the annotation file of reference genome.
-* output:
+* output: <br>
   Gene count file per sample
-  The results are as shown in the table below:
+  The results are as shown in the table below: <br>
 
    |  | Gene 1 | Gene 2 | ... |
    | --- | --- | --- | --- |
@@ -108,18 +108,18 @@ $ python Gene_count.py --ref_genome=[reference genome] --input_dir=[input direct
 
 ### Step3. GSVA
 
-* input:
+* input: <br>
   TF-TG geneset file, Expression file
-* variable:
+* variable: <br>
   * [TF-TG geneset file] => TF-TG geneset file (e.g. ./hTFTarget/colon_TF-Target-information.txt)
   * [Expression file] => File name of gene expression file
   * [GSVA output file] => File name of GSVA output results
-* Description:
+* Description: <br>
   Seperate TG into positively and negatively regulated groups based on correlation coefficient with corresponding TF expression value.
   Based on these groups, perform GSVA.
-* output:
+* output: <br>
   GSVA output file
-  The results are as shown in the table below:
+  The results are as shown in the table below: <br>
 
    | Genesets | Sample 1 | Sample 2 | ... |
    | --- | --- | --- | --- |
@@ -135,20 +135,20 @@ $ python GSVA.py -g [TF-TG geneset file] -e [Expression file] -o [GSVA output fi
 
 ### Step4. MutTF
 
-* input:
+* input: <br>
   Signature extraction results, Gene count matrix per sample, Seperated TF-TG geneset, GSVA results
-* variable:
+* variable: <br>
   * [Signature extraction directory] => Directory of signature extraction results (output from **Signature_extraction.py**)
   * [Gene count directory] => Directory with gene-wise mutation count files (output from **Gene_count.py**)
   * [TF-TG geneset file] => TF-TG geneset file used in **GSVA.py** (e.g. ./hTFTarget/colon_TF-Target-information.txt)
   * [GSVA output file] => File name of GSVA results (output from **GSVA.py**)
   * [Correlation output directory] => Directory of correlation results between signature-induced mutation count and GSVA
-* Description:
+* Description: <br>
   Calculate the signature's contribution (by sample).
   Analyze the correlation between gene-specific counts by signature and the GSVA score.
-* output:
+* output: <br>
   Correlation result matrix (gene id, signature id, correlation coefficient, p-value)
-  The results are as shown in the table below:
+  The results are as shown in the table below: <br>
 
    | No. | Gene | sig | r | p |
    | --- | --- | --- | --- | --- |
