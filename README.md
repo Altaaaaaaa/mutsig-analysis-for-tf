@@ -11,7 +11,11 @@ MutTF is a multi-omics analysis framework that combines gene expression data wit
 ## Input Data
 
 1. Variant files (.vcf)
+VCF files from whole genome sequencing are required in this analysis. You can obtain VCF files after steps of aligning the reads to a reference genome, marking duplicates, performing local realignment and base quality recalibration, and calling variants using variant calling software.
 2. Expression file (.tsv)
+Expression file from RNA sequencing are required in this analysis. You can obtain expression files after steps of aligning the reads to a reference genome or transcriptome, and quantifying the read counts per gene or transcript.
+
+Since VCF files used in this project require a dbGaP access request, only the RNA expression data are provided.
 
 
 ## Installation
