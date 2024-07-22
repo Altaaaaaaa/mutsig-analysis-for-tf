@@ -191,9 +191,9 @@ $ python Node_classification.py --corr_dir=[Correlation results] --pos_neg=[dire
 * input: <br>
   matrix P
 * variable: <br>
-  [Signature extraction directory] => Directory of signature extraction results
-  [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
-  [version] => Enter the version of cosmic signature you want to compare (e.g. 3.3.1)
+  * [Signature extraction directory] => Directory of signature extraction results
+  * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
+  * [version] => Enter the version of cosmic signature you want to compare (e.g. 3.3.1)
 * output: <br>
   image showing cosine similarity
 
