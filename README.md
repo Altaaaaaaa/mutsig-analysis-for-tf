@@ -153,7 +153,7 @@ $ python GSVA.py -g [TF-TG geneset file] -e [Expression file] -o [GSVA output fi
   Calculate the signature's contribution (by sample).
   Analyze the correlation between gene-specific counts by signature and the GSVA score.
 * Output: <br>
-  Correlation result matrix (All and Filtered) (./[Correlation output directory]/[All/Filt]_Result_[pos/neg].csv) <br>
+  Correlation result matrix (All and Filtered) (./[Correlation output directory]/[All/Filt]\_Result\_[pos/neg].csv) <br>
   The results are as shown in the table below: <br>
 
    | No. | Gene | sig | r | p |
