@@ -32,7 +32,7 @@ pip install -r requirements.txt
 
 ## How to execute code
 
-- [Step1) Mutation signature extraction](#Step1-Mutational-signature-extraction)  
+- [Step1) Mutational signature extraction](#Step1-Mutational-signature-extraction)  
 - [Step2) Gene_count](#Step2-Gene_count)   
 - [Step3) GSVA](#Step3-GSVA)   
 - [Step4) MutTF](#Step4-MutTF)
