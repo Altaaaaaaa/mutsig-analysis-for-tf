@@ -109,9 +109,9 @@ def calculate(i): # vcf 파일 반복
     print(f"Time: {hours}:{minutes}:{seconds}", file = f)
     f.close()
 
-    df.to_csv(f'{args.output_dir}/Gene_count/{fname[:-4]}_cnt.csv', sep=',', index=True, header=True)
+    df.to_csv(f'{args.output_dir}/{fname[:-4]}_cnt.csv', sep=',', index=True, header=True)
 
 if __name__ == "__main__":
     pool = Pool(processes = args.threads)
-    os.makedirs(f'{args.output_dir}/Gene_count', exist_ok = True)
+    os.makedirs(f'{args.output_dir}', exist_ok = True)
     result = pool.map(calculate, range(len(flist)))
