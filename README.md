@@ -46,12 +46,12 @@ In the command line, please run the following:
 * Input: <br>
   VCF file per sample
 * Variable: <br>
-  * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
-  * [minimum] => Minimum number of signatures to extract
-  * [maximum] => Maximum number of signatures to extract
-  * [input directory] => Directory where vcf files are located (e.g. input_data).
-  * [output directory] => Directory where the output data should be stored.
-  * [threads] => Number of threads to use in signature extraction
+  * [reference genome] &rarr; Enter the reference genome you want to analyze (e.g. GRCh37).
+  * [minimum] &rarr; Minimum number of signatures to extract
+  * [maximum] &rarr; Maximum number of signatures to extract
+  * [input directory] &rarr; Directory where vcf files are located (e.g. input_data).
+  * [output directory] &rarr; Directory where the output data should be stored.
+  * [threads] &rarr; Number of threads to use in signature extraction
 * Description: <br>
   Used **SigprofilerMatrixGenerator** to convert vcf files into count matrix, and used **sigProfilerExtractor** to extract signatures based on the count matrix generated.
   The optimal number of signature will be selected and used for further analysis. (Refer to './[output directory]/SBS96/SBS96_selection_plot.pdf' for the best number of signature)
@@ -90,10 +90,10 @@ $ python Signature_extraction.py --ref_genome=[reference genome] --minimum=[mini
 * Input: <br>
   VCF file per sample
 * Variable: <br>
-  * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
-  * [input directory] => Directory where vcf files are located (e.g. input_data).
-  * [output directory] => Directory where the output data should be stored.
-  * [threads] => Number of threads to use in multiprocessing
+  * [reference genome] &rarr; Enter the reference genome you want to analyze (e.g. GRCh37).
+  * [input directory] &rarr; Directory where vcf files are located (e.g. input_data).
+  * [output directory] &rarr; Directory where the output data should be stored.
+  * [threads] &rarr; Number of threads to use in multiprocessing
 * Description: <br>
   Before we calculate the contribution of signatures, we need **gene-specific mutation counts** calculated using the annotation file of reference genome.
 * Output: <br>
@@ -117,9 +117,9 @@ $ python Gene_count.py --ref_genome=[reference genome] --input_dir=[input direct
 * Input: <br>
   TF-TG geneset file, Expression file
 * Variable: <br>
-  * [TF-TG geneset file] => TF-TG geneset file (e.g. ./hTFTarget/colon_TF-Target-information.txt)
-  * [Expression file] => File name of gene expression file
-  * [GSVA output file] => File name of GSVA output results
+  * [TF-TG geneset file] &rarr; TF-TG geneset file (e.g. ./hTFTarget/colon_TF-Target-information.txt)
+  * [Expression file] &rarr; File name of gene expression file
+  * [GSVA output file] &rarr; File name of GSVA output results
 * Description: <br>
   Seperate TG into positively and negatively regulated groups based on correlation coefficient with corresponding TF expression value.
   Based on these groups, perform GSVA.
@@ -144,11 +144,11 @@ $ python GSVA.py -g [TF-TG geneset file] -e [Expression file] -o [GSVA output fi
 * Input: <br>
   Signature extraction results, Gene count matrix per sample, Seperated TF-TG geneset, GSVA results
 * Variable: <br>
-  * [Signature extraction directory] => Directory of signature extraction results (output from **Signature_extraction.py**)
-  * [Gene count directory] => Directory with gene-wise mutation count files (output from **Gene_count.py**)
-  * [TF-TG geneset file] => TF-TG geneset file used in **GSVA.py** (e.g. ./hTFTarget/colon_TF-Target-information.txt)
-  * [GSVA output file] => File name of GSVA results (output from **GSVA.py**)
-  * [Correlation output directory] => Directory of correlation results between signature-induced mutation count and GSVA
+  * [Signature extraction directory] &rarr; Directory of signature extraction results (output from **Signature_extraction.py**)
+  * [Gene count directory] &rarr; Directory with gene-wise mutation count files (output from **Gene_count.py**)
+  * [TF-TG geneset file] &rarr; TF-TG geneset file used in **GSVA.py** (e.g. ./hTFTarget/colon_TF-Target-information.txt)
+  * [GSVA output file] &rarr; File name of GSVA results (output from **GSVA.py**)
+  * [Correlation output directory] &rarr; Directory of correlation results between signature-induced mutation count and GSVA
 * Description: <br>
   Calculate the signature's contribution (by sample).
   Analyze the correlation between gene-specific counts by signature and the GSVA score.
@@ -173,11 +173,11 @@ $ python MutTF.py --ext_dir=[Signature extraction directory] --count_dir=[Gene c
 * Input: <br>
   Correlation results, GSVA results
 * Variable: <br>
-  * [Correlation results] => File name of correlation results (output from **MutTF.py**)
-  * [direction] => Enter the group for which you want to proceed node classification (pos or neg)
-  * [GSVA results] => File name of GSVA results (output from **GSVA.py**)
-  * [Number of signatures] => The optimal number of signatures used for analysis
-  * [Output directory] => Directory of node classification results
+  * [Correlation results] &rarr; File name of correlation results (output from **MutTF.py**)
+  * [direction] &rarr; Enter the group for which you want to proceed node classification (pos or neg)
+  * [GSVA results] &rarr; File name of GSVA results (output from **GSVA.py**)
+  * [Number of signatures] &rarr; The optimal number of signatures used for analysis
+  * [Output directory] &rarr; Directory of node classification results
 * Output: <br>
   Files including result of node classification and visualization. <br>
   The visualized graph figure is saved as '[Output_directory]/node_figure_XXX.png'
@@ -193,9 +193,9 @@ $ python Node_classification.py --corr_dir=[Correlation results] --pos_neg=[dire
 * Input: <br>
   matrix P
 * Variable: <br>
-  * [Signature extraction directory] => Directory of signature extraction results
-  * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
-  * [version] => Enter the version of cosmic signature you want to compare (e.g. 3.3.1)
+  * [Signature extraction directory] &rarr; Directory of signature extraction results
+  * [reference genome] &rarr; Enter the reference genome you want to analyze (e.g. GRCh37).
+  * [version] &rarr; Enter the version of cosmic signature you want to compare (e.g. 3.3.1)
 * Output: <br>
   image showing cosine similarity
 
