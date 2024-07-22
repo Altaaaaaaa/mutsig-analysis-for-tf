@@ -46,12 +46,12 @@ In the command line, please run the following:
 * input: <br>
   VCF file per sample
 * variable: <br>
-  [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
-  [minimum] => Minimum number of signatures to extract
-  [maximum] => Maximum number of signatures to extract
-  [input directory] => directory where vcf files are located (e.g. input_data).
-  [output directory] => directory where the output data should be stored.
-  [threads] => number of threads to use in signature extraction
+  * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
+  * [minimum] => Minimum number of signatures to extract
+  * [maximum] => Maximum number of signatures to extract
+  * [input directory] => directory where vcf files are located (e.g. input_data).
+  * [output directory] => directory where the output data should be stored.
+  * [threads] => number of threads to use in signature extraction
 * Description: <br>
   Used **SigprofilerMatrixGenerator** to convert vcf files into count matrix, and used **sigProfilerExtractor** to extract signatures based on the count matrix generated.
   The optimal number of signature will be selected and used for further analysis. (Refer to './[output directory]/SBS96/SBS96_selection_plot.pdf' for the best number of signature)
