@@ -43,21 +43,21 @@ In the command line, please run the following:
 
 ### Step1. Mutational signature extraction
 
-* input: <br>
+* Input: <br>
   VCF file per sample
-* variable: <br>
+* Variable: <br>
   * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
   * [minimum] => Minimum number of signatures to extract
   * [maximum] => Maximum number of signatures to extract
-  * [input directory] => directory where vcf files are located (e.g. input_data).
-  * [output directory] => directory where the output data should be stored.
-  * [threads] => number of threads to use in signature extraction
+  * [input directory] => Directory where vcf files are located (e.g. input_data).
+  * [output directory] => Directory where the output data should be stored.
+  * [threads] => Number of threads to use in signature extraction
 * Description: <br>
   Used **SigprofilerMatrixGenerator** to convert vcf files into count matrix, and used **sigProfilerExtractor** to extract signatures based on the count matrix generated.
   The optimal number of signature will be selected and used for further analysis. (Refer to './[output directory]/SBS96/SBS96_selection_plot.pdf' for the best number of signature)
   In this project, we used SBS96-based signatures (96 types of mutations in Single Base Substitution) in further analysis.
   Refer to https://cancer.sanger.ac.uk/signatures/tools/.
-* output: <br>
+* Output: <br>
   Signature extraction results
   The results are as shown in the tables below: <br>
 
@@ -85,16 +85,16 @@ $ python Signature_extraction.py --ref_genome=[reference genome] --minimum=[mini
 
 ### Step2. Gene_count
 
-* input: <br>
+* Input: <br>
   VCF file per sample
-* variable: <br>
+* Variable: <br>
   * [reference genome] => Enter the reference genome you want to analyze (e.g. GRCh37).
-  * [input directory] => directory where vcf files are located (e.g. input_data).
-  * [output directory] => directory where the output data should be stored.
-  * [threads] => number of threads to use in multiprocessing
+  * [input directory] => Directory where vcf files are located (e.g. input_data).
+  * [output directory] => Directory where the output data should be stored.
+  * [threads] => Number of threads to use in multiprocessing
 * Description: <br>
   Before we calculate the contribution of signatures, we need **gene-specific mutation counts** calculated using the annotation file of reference genome.
-* output: <br>
+* Output: <br>
   Gene count file per sample
   The results are as shown in the table below: <br>
 
