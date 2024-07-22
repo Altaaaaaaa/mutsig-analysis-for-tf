@@ -69,7 +69,7 @@ In the command line, please run the following:
    | Sample 2 | 35 | 13 |
    | ... | 16 | 32 |
 
-  > Process Matrix ((./[output directory]/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Signatures/SBS96_De-Novo_Signatures.txt)
+  > Process Matrix (./[output directory]/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Signatures/SBS96_De-Novo_Signatures.txt)
 
    | MutationType | SBS96A | SBS96B | ... |
    | --- | --- | --- | --- |
