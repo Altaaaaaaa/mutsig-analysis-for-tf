@@ -14,6 +14,15 @@ MutTF is a multi-omics analysis framework that combines gene expression data wit
   VCF files from whole genome sequencing are required in this analysis. You can obtain VCF files after steps of aligning the reads to a reference genome, marking duplicates, performing local realignment and base quality recalibration, and calling variants using variant calling software.
 2. **Expression file (.tsv)** <br>
   Expression file from RNA sequencing are required in this analysis. You can obtain expression files after steps of aligning the reads to a reference genome or transcriptome, and quantifying the read counts per gene or transcript.
+3. (Optional) **TF-TG geneset file (.txt)** <br>
+  We provide TF-TG geneset file obtained from hTFTarget, but if you wish to use a manual TF-TG geneset, the format of the file should be like this:
+  | name | description | ... |
+  | --- | --- | --- |
+  | TF_0 | TG_0 |
+  | TF_0 | TG_1 | 
+  | ... | TG_2 |
+
+  "name" column contains TF, and "description" column contains group of TGs regulated by the corresponding TF.
 
 Since VCF files used in this project require a dbGaP access request, only the RNA expression data are provided.
 
@@ -122,7 +131,7 @@ $ python Gene_count.py --ref_genome=[reference genome] --input_dir=[input direct
   * [GSVA output file] &rarr; File name of GSVA output results
 * Description: <br>
   Seperate TG into positively and negatively regulated groups based on correlation coefficient with corresponding TF expression value.
-  Based on these groups, perform GSVA.
+  Based on these groups, perform GSVA. 
 * Output: <br>
   GSVA output file (./[GSVA output file].tsv) <br>
   The results are as shown in the table below: <br>
