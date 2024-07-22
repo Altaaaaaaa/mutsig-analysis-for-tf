@@ -44,7 +44,7 @@ In the command line, please run the following:
 ### Step1. Mutational signature extraction
 
 * Input: <br>
-  VCF file per sample
+  VCF file per sample (.vcf)
 * Variable: <br>
   * [reference genome] &rarr; Enter the reference genome you want to analyze (e.g. GRCh37).
   * [minimum] &rarr; Minimum number of signatures to extract
@@ -58,7 +58,7 @@ In the command line, please run the following:
   In this project, we used SBS96-based signatures (96 types of mutations in Single Base Substitution) in further analysis.
   Refer to https://cancer.sanger.ac.uk/signatures/tools/.
 * Output: <br>
-  Signature extraction results <br>
+  Directory including signature extraction results (./[output directory]) <br>
   The results are as shown in the tables below: <br>
 
   **Exposure Matrix** <br>
@@ -88,7 +88,7 @@ $ python Signature_extraction.py --ref_genome=[reference genome] --minimum=[mini
 ### Step2. Gene_count
 
 * Input: <br>
-  VCF file per sample
+  VCF file per sample (.vcf)
 * Variable: <br>
   * [reference genome] &rarr; Enter the reference genome you want to analyze (e.g. GRCh37).
   * [input directory] &rarr; Directory where vcf files are located (e.g. input_data).
@@ -97,7 +97,7 @@ $ python Signature_extraction.py --ref_genome=[reference genome] --minimum=[mini
 * Description: <br>
   Before we calculate the contribution of signatures, we need **gene-specific mutation counts** calculated using the annotation file of reference genome.
 * Output: <br>
-  Gene count file per sample <br>
+  Gene count matrix per sample (./[output directory]/*_cnt.csv) <br>
   The results are as shown in the table below: <br>
 
    |  | Gene 1 | Gene 2 | ... |
@@ -115,7 +115,7 @@ $ python Gene_count.py --ref_genome=[reference genome] --input_dir=[input direct
 ### Step3. GSVA
 
 * Input: <br>
-  TF-TG geneset file, Expression file
+  TF-TG geneset file (.txt), Expression file (.tsv)
 * Variable: <br>
   * [TF-TG geneset file] &rarr; TF-TG geneset file (e.g. ./hTFTarget/colon_TF-Target-information.txt)
   * [Expression file] &rarr; File name of gene expression file
@@ -124,7 +124,7 @@ $ python Gene_count.py --ref_genome=[reference genome] --input_dir=[input direct
   Seperate TG into positively and negatively regulated groups based on correlation coefficient with corresponding TF expression value.
   Based on these groups, perform GSVA.
 * Output: <br>
-  GSVA output file <br>
+  GSVA output file (./[GSVA output file].tsv) <br>
   The results are as shown in the table below: <br>
 
    | Genesets | Sample 1 | Sample 2 | ... |
@@ -142,7 +142,7 @@ $ python GSVA.py -g [TF-TG geneset file] -e [Expression file] -o [GSVA output fi
 ### Step4. MutTF
 
 * Input: <br>
-  Signature extraction results, Gene count matrix per sample, Seperated TF-TG geneset, GSVA results
+  Signature extraction results (dir), Gene count matrix per sample (.csv), TF-TG geneset file (.txt), GSVA results (.tsv)
 * Variable: <br>
   * [Signature extraction directory] &rarr; Directory of signature extraction results (output from **Signature_extraction.py**)
   * [Gene count directory] &rarr; Directory with gene-wise mutation count files (output from **Gene_count.py**)
@@ -153,7 +153,7 @@ $ python GSVA.py -g [TF-TG geneset file] -e [Expression file] -o [GSVA output fi
   Calculate the signature's contribution (by sample).
   Analyze the correlation between gene-specific counts by signature and the GSVA score.
 * Output: <br>
-  Correlation result matrix (gene id, signature id, correlation coefficient, p-value) <br>
+  Correlation result matrix (All and Filtered) (./[Correlation output directory]/[All/Filt]_Result_[pos/neg].csv) <br>
   The results are as shown in the table below: <br>
 
    | No. | Gene | sig | r | p |
