@@ -171,7 +171,7 @@ for gs in range(len(gsva_data)):
             df.loc[index, 'p'] = p_value
             index += 1
 
-    df.to_csv(f'./{args.corr_dir}/Result_'+pn[gs]+'.csv') 
+    df.to_csv(f'./{args.corr_dir}/All_Result_'+pn[gs]+'.csv') 
 
 
 # Filtering
