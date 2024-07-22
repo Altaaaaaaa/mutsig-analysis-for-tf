@@ -58,7 +58,7 @@ In the command line, please run the following:
   In this project, we used SBS96-based signatures (96 types of mutations in Single Base Substitution) in further analysis.
   Refer to https://cancer.sanger.ac.uk/signatures/tools/.
 * Output: <br>
-  Signature extraction results
+  Signature extraction results <br>
   The results are as shown in the tables below: <br>
 
   **Exposure Matrix** <br>
@@ -97,7 +97,7 @@ $ python Signature_extraction.py --ref_genome=[reference genome] --minimum=[mini
 * Description: <br>
   Before we calculate the contribution of signatures, we need **gene-specific mutation counts** calculated using the annotation file of reference genome.
 * Output: <br>
-  Gene count file per sample
+  Gene count file per sample <br>
   The results are as shown in the table below: <br>
 
    |  | Gene 1 | Gene 2 | ... |
@@ -124,7 +124,7 @@ $ python Gene_count.py --ref_genome=[reference genome] --input_dir=[input direct
   Seperate TG into positively and negatively regulated groups based on correlation coefficient with corresponding TF expression value.
   Based on these groups, perform GSVA.
 * Output: <br>
-  GSVA output file
+  GSVA output file <br>
   The results are as shown in the table below: <br>
 
    | Genesets | Sample 1 | Sample 2 | ... |
@@ -153,7 +153,7 @@ $ python GSVA.py -g [TF-TG geneset file] -e [Expression file] -o [GSVA output fi
   Calculate the signature's contribution (by sample).
   Analyze the correlation between gene-specific counts by signature and the GSVA score.
 * Output: <br>
-  Correlation result matrix (gene id, signature id, correlation coefficient, p-value)
+  Correlation result matrix (gene id, signature id, correlation coefficient, p-value) <br>
   The results are as shown in the table below: <br>
 
    | No. | Gene | sig | r | p |
@@ -179,7 +179,7 @@ $ python MutTF.py --ext_dir=[Signature extraction directory] --count_dir=[Gene c
   * [Number of signatures] => The optimal number of signatures used for analysis
   * [Output directory] => Directory of node classification results
 * Output: <br>
-  Files including result of node classification and visualization.
+  Files including result of node classification and visualization. <br>
   The visualized graph figure is saved as '[Output_directory]/node_figure_XXX.png'
 
 ```bash
