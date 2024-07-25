@@ -18,9 +18,9 @@ MutTF is a multi-omics analysis framework that combines gene expression data wit
   We provide TF-TG geneset file obtained from hTFTarget, but if you wish to use a manual TF-TG geneset, the format of the file should be like this:
    | name | description | ... |
    | --- | --- | --- |
-   | TF_0 | TG_0 | ... |
-   | TF_0 | TG_1 | ... |
-   | ... | TG_2 | ... |
+   | TF_0 | TG_0 |
+   | TF_0 | TG_1 |
+   | ... | TG_2 |
 
     "name" column contains TF, and "description" column contains group of TGs regulated by the corresponding TF.
 
