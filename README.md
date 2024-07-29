@@ -1,20 +1,21 @@
 # Mutational Signature Analysis tool
 
-MutTF is a multi-omics analysis framework that combines gene expression data with mutational signatures based on non-negative matrix decomposition and correlation analysis. MutTF can discover candidate transcription factors(TFs) that regulate target gene expression by mutational signatures.
+**MutTF** is **a multi-omics analysis framework** that combines gene expression data with mutational signatures based on non-negative matrix decomposition and correlation analysis. MutTF can discover **candidate transcription factors(TFs) that regulate target gene expression by mutational signatures**.
 
 <!--
 나중에 여기에 논문 링크 넣기
+글자에 색 입히기: ${\textsf{\color{green}Green}}$
 -->
 
 ![Workflow of 'MutTF'](./readme_img/workflow_new.png)
 
 ## Input Data
 
-1. **Variant files (.vcf)** <br>
+1. `Variant files (.vcf)` <br>
   VCF files from whole genome sequencing are required in this analysis. You can obtain VCF files after steps of aligning the reads to a reference genome, marking duplicates, performing local realignment and base quality recalibration, and calling variants using variant calling software.
-2. **Expression file (.tsv)** <br>
+2. `Expression file (.tsv)` <br>
   Expression file from RNA sequencing are required in this analysis. You can obtain expression files after steps of aligning the reads to a reference genome or transcriptome, and quantifying the read counts per gene or transcript.
-3. (Optional) **TF-TG geneset file (.txt)** <br>
+3. (Optional) `TF-TG geneset file (.txt)` <br>
   We provide TF-TG geneset file obtained from hTFTarget, but if you wish to use a manual TF-TG geneset, the format of the file should be like this:
    | name | description | ... |
    | --- | --- | --- |
@@ -22,7 +23,7 @@ MutTF is a multi-omics analysis framework that combines gene expression data wit
    | TF_0 | TG_1 |
    | ... | TG_2 |
 
-    "name" column contains TF, and "description" column contains group of TGs regulated by the corresponding TF.
+    **"name"** column contains TF, and **"description"** column contains group of TGs regulated by the corresponding TF.
 
   Since VCF files used in this project require a dbGaP access request, only the RNA expression data are provided.
 
@@ -52,21 +53,21 @@ In the command line, please run the following:
 
 ### Step1. Mutational signature extraction
 
-* Input: <br>
+* `Input`: <br>
   VCF file per sample (.vcf)
-* Variable: <br>
+* `Variable`: <br>
   * [reference genome] &rarr; Enter the reference genome you want to analyze (e.g. GRCh37).
   * [minimum] &rarr; Minimum number of signatures to extract
   * [maximum] &rarr; Maximum number of signatures to extract
   * [input directory] &rarr; Directory where vcf files are located (e.g. input_data).
   * [output directory] &rarr; Directory where the output data should be stored.
   * [threads] &rarr; Number of threads to use in signature extraction
-* Description: <br>
+* `Description`: <br>
   Used **SigprofilerMatrixGenerator** to convert vcf files into count matrix, and used **sigProfilerExtractor** to extract signatures based on the count matrix generated.
   The optimal number of signature will be selected and used for further analysis. (Refer to './[output directory]/SBS96/SBS96_selection_plot.pdf' for the best number of signature)
   In this project, we used SBS96-based signatures (96 types of mutations in Single Base Substitution) in further analysis.
   Refer to https://cancer.sanger.ac.uk/signatures/tools/.
-* Output: <br>
+* `Output`: <br>
   Directory including signature extraction results (./[output directory]) <br>
   The results are as shown in the tables below: <br>
 
