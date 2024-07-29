@@ -200,13 +200,13 @@ $ python Node_classification.py --corr_dir=[Correlation results] --pos_neg=[dire
 **Denovo_cosine**
 
 * Input: <br>
-  matrix P
+  Matrix P
 * Variable: <br>
   * [Signature extraction directory] &rarr; Directory of signature extraction results
   * [reference genome] &rarr; Enter the reference genome you want to analyze (e.g. GRCh37).
   * [version] &rarr; Enter the version of cosmic signature you want to compare (e.g. 3.3.1)
 * Output: <br>
-  image showing cosine similarity
+  Image showing cosine similarity
 
 * A heat map shows how the optimal signature extracted by De novo Signatures from **NMF.py** is similar to the cosmic signature.
 * We referred from https://cancer.sanger.ac.uk/signatures/downloads/.
