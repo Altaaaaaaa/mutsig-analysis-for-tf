@@ -97,16 +97,16 @@ $ python Signature_extraction.py --ref_genome=[reference genome] --minimum=[mini
 
 ### Step2. Gene_count
 
-* Input: <br>
+* `Input`: <br>
   VCF file per sample (.vcf)
-* Variable: <br>
+* `Variable`: <br>
   * [reference genome] &rarr; Enter the reference genome you want to analyze (e.g. GRCh37).
   * [input directory] &rarr; Directory where vcf files are located (e.g. input_data).
   * [output directory] &rarr; Directory where the output data should be stored.
   * [threads] &rarr; Number of threads to use in multiprocessing
-* Description: <br>
+* `Description`: <br>
   Before we calculate the contribution of signatures, we need **gene-specific mutation counts** calculated using the annotation file of reference genome.
-* Output: <br>
+* `Output`: <br>
   Gene count matrix per sample (./[output directory]/*_cnt.csv) <br>
   The results are as shown in the table below: <br>
 
@@ -124,16 +124,16 @@ $ python Gene_count.py --ref_genome=[reference genome] --input_dir=[input direct
 
 ### Step3. GSVA
 
-* Input: <br>
+* `Input`: <br>
   TF-TG geneset file (.txt), Expression file (.tsv)
-* Variable: <br>
+* `Variable`: <br>
   * [TF-TG geneset file] &rarr; TF-TG geneset file (e.g. ./hTFTarget/colon_TF-Target-information.txt)
   * [Expression file] &rarr; File name of gene expression file
   * [GSVA output file] &rarr; File name of GSVA output results
-* Description: <br>
+* `Description`: <br>
   Seperate TG into positively and negatively regulated groups based on correlation coefficient with corresponding TF expression value.
   Based on these groups, perform GSVA. 
-* Output: <br>
+* `Output`: <br>
   GSVA output file (./[GSVA output file].tsv) <br>
   The results are as shown in the table below: <br>
 
@@ -151,18 +151,18 @@ $ python GSVA.py -g [TF-TG geneset file] -e [Expression file] -o [GSVA output fi
 
 ### Step4. MutTF
 
-* Input: <br>
+* `Input`: <br>
   Signature extraction results (dir), Gene count matrix per sample (.csv), TF-TG geneset file (.txt), GSVA results (.tsv)
-* Variable: <br>
+* `Variable`: <br>
   * [Signature extraction directory] &rarr; Directory of signature extraction results (output from **Signature_extraction.py**)
   * [Gene count directory] &rarr; Directory with gene-wise mutation count files (output from **Gene_count.py**)
   * [TF-TG geneset file] &rarr; TF-TG geneset file used in **GSVA.py** (e.g. ./hTFTarget/colon_TF-Target-information.txt)
   * [GSVA output file] &rarr; File name of GSVA results (output from **GSVA.py**)
   * [Correlation output directory] &rarr; Directory of correlation results between signature-induced mutation count and GSVA
-* Description: <br>
+* `Description`: <br>
   Calculate the signature's contribution (by sample).
   Analyze the correlation between gene-specific counts by signature and the GSVA score.
-* Output: <br>
+* `Output`: <br>
   Correlation result matrix (All and Filtered) (./[Correlation output directory]/[All/Filt]\_Result\_[pos/neg].csv) <br>
   The results are as shown in the table below: <br>
 
@@ -180,15 +180,15 @@ $ python MutTF.py --ext_dir=[Signature extraction directory] --count_dir=[Gene c
 
 **Node_classification**
 
-* Input: <br>
+* `Input`: <br>
   Correlation results, GSVA results
-* Variable: <br>
+* `Variable`: <br>
   * [Correlation results] &rarr; File name of correlation results (output from **MutTF.py**)
   * [direction] &rarr; Enter the group for which you want to proceed node classification (pos or neg)
   * [GSVA results] &rarr; File name of GSVA results (output from **GSVA.py**)
   * [Number of signatures] &rarr; The optimal number of signatures used for analysis
   * [Output directory] &rarr; Directory of node classification results
-* Output: <br>
+* `Output`: <br>
   Files including result of node classification and visualization. <br>
   The visualized graph figure is saved as '[Output_directory]/node_figure_XXX.png'
 
@@ -200,13 +200,13 @@ $ python Node_classification.py --corr_dir=[Correlation results] --pos_neg=[dire
 
 **Denovo_cosine**
 
-* Input: <br>
+* `Input`: <br>
   Matrix P
-* Variable: <br>
+* `Variable`: <br>
   * [Signature extraction directory] &rarr; Directory of signature extraction results
   * [reference genome] &rarr; Enter the reference genome you want to analyze (e.g. GRCh37).
   * [version] &rarr; Enter the version of cosmic signature you want to compare (e.g. 3.3.1)
-* Output: <br>
+* `Output`: <br>
   Image showing cosine similarity
 
 * A heat map shows how the optimal signature extracted by De novo Signatures from **NMF.py** is similar to the cosmic signature.
