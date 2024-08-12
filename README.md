@@ -16,7 +16,7 @@
 2. `Expression file (.tsv)` <br>
   Expression file from RNA sequencing are required in this analysis. You can obtain expression files after steps of aligning the reads to a reference genome or transcriptome, and quantifying the read counts per gene or transcript.
 3. (Optional) `TF-TG geneset file (.txt)` <br>
-  We provide TF-TG geneset file obtained from hTFTarget, but if you wish to use a manual TF-TG geneset, the format of the file should be like this:
+  We provide TF-TG geneset file obtained from [hTFTarget](http://bioinfo.life.hust.edu.cn/hTFtarget#!/), but if you wish to use a manual TF-TG geneset, the format of the file should be like this:
    | name | description | ... |
    | --- | --- | --- |
    | TF_0 | TG_0 |
