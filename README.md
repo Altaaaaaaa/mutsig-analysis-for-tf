@@ -66,7 +66,7 @@ In the command line, please run the following:
   Used **SigprofilerMatrixGenerator** to convert vcf files into count matrix, and used **sigProfilerExtractor** to extract signatures based on the count matrix generated.
   The optimal number of signature will be selected and used for further analysis. (Refer to './[output directory]/SBS96/SBS96_selection_plot.pdf' for the best number of signature)
   In this project, we used SBS96-based signatures (96 types of mutations in Single Base Substitution) in further analysis.
-  Refer to https://cancer.sanger.ac.uk/signatures/tools/.
+  Refer to [COSMIC Tools](https://cancer.sanger.ac.uk/signatures/tools/).
 * `Output`: <br>
   Directory including signature extraction results (./[output directory]) <br>
   The results are as shown in the tables below: <br>
@@ -210,7 +210,7 @@ $ python Node_classification.py --corr_dir=[Correlation results] --pos_neg=[dire
   Image showing cosine similarity
 
 * A heat map shows how the optimal signature extracted by De novo Signatures from **NMF.py** is similar to the cosmic signature.
-* We referred from https://cancer.sanger.ac.uk/signatures/downloads/.
+* We referred from [COSMIC Signatures](https://cancer.sanger.ac.uk/signatures/downloads/).
 * Examples are as follows:
 ![Denovo_cosine](./readme_img/cosine.png) 
 
