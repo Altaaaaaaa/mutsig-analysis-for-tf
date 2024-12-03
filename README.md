@@ -217,3 +217,14 @@ $ python Node_classification.py --corr_dir=[Correlation results] --pos_neg=[dire
 ```bash
 $ python Denovo_cosine.py --ext_dir=[Signature extraction directory] --ref_genome=[reference genome] --version=[version]
 ```
+
+## Contributors
+
+- [Jiwon You](https://github.com/Altaaaaaaa)
+  - M.S.
+  - Department of Computer Engineering, Chungbuk National University, Republic of Korea.
+  - [71one.you@gmail.com](71one.you@gmail.com)
+- [Yooeun Kim](https://github.com/ys910111)
+  - M.S.
+  - Interdisciplinary Program in Bioinformatics, Seoul National University, Republic of Korea.
+  - [ys910111@snu.ac.kr](ys910111@snu.ac.kr)
