@@ -12,7 +12,7 @@
 ## Input Data
 
 1. `Variant files (.vcf)` <br>
-  VCF files from whole genome sequencing are required in this analysis. You can obtain VCF files after steps of aligning the reads to a reference genome, marking duplicates, performing local realignment and base quality recalibration, and calling variants using variant calling software.
+  VCF files from whole genome sequencing are required in this analysis. You can obtain VCF files after steps of aligning the reads to a reference genome, marking duplicates, performing local realignment and base quality recalibration, and calling variants using variant calling software.  
 2. `Expression file (.tsv)` <br>
   Expression file from RNA sequencing are required in this analysis. You can obtain expression files after steps of aligning the reads to a reference genome or transcriptome, and quantifying the read counts per gene or transcript.
 3. (Optional) `TF-TG geneset file (.txt)` <br>
@@ -59,7 +59,7 @@ In the command line, please run the following:
   * [reference genome] &rarr; Enter the reference genome you want to analyze (e.g. GRCh37).
   * [minimum] &rarr; Minimum number of signatures to extract
   * [maximum] &rarr; Maximum number of signatures to extract
-  * [input directory] &rarr; Directory where vcf files are located (e.g. input_data).
+  * [input directory] &rarr; Directory where vcf files are located (e.g. input_data, or './sample_data/demo_vcfs/' for demo files).
   * [output directory] &rarr; Directory where the output data should be stored.
   * [threads] &rarr; Number of threads to use in signature extraction
 * `Description`: <br>
