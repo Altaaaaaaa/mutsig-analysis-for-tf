@@ -1,3 +1,5 @@
+##fileformat=VCFv4.2
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
 chr1	2131822	.	G	T	.	.	.
 chr1	16831659	.	A	G	.	.	.
 chr1	18461321	.	G	C	.	.	.
