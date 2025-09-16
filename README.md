@@ -34,9 +34,36 @@
 git clone https://github.com/BML-cbnu/MutTF
 cd MutTF
 ```
-2. Install the requirments.
+2. Install the Python requirements.
 ```
 pip install -r requirements.txt
+```
+
+3. Install the required R packages (Tested with R 4.3.2 and Bioconductor 3.18)
+In R console:
+```r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+# CRAN packages
+install.packages(c("data.table", "dplyr", "optparse", "ggplot2"))
+
+# Bioconductor packages
+BiocManager::install(c("GSVA", "AnnotationDbi", "org.Hs.eg.db", 
+                       "edgeR", "limma", "maftools", "viper"))
+
+# Specific versions used in our analysis:
+# GSVA          1.44.5
+# AnnotationDbi 1.60.2
+# org.Hs.eg.db  3.16.0
+# data.table    1.14.8
+# dplyr         1.1.1
+# optparse      1.7.3
+# ggplot2       3.4.1
+# edgeR         3.40.2
+# limma         3.54.2
+# maftools      2.14.0
+# viper         1.32.0
 ```
 
 
